@@ -3,7 +3,6 @@
 <html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateUrl='indie.xml' b:templateVersion='1.3.0' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
   &lt;!--<head>--&gt;&lt;head&gt;
     <meta content='width=device-width, initial-scale=1' name='viewport'/>
-    <meta content='qjJZT6ArPT' name='baidu-site-verification'/>
     <title><data:view.title.escaped/></title>    
     <b:include data='blog' name='all-head-content'/>
 
@@ -131,7 +130,7 @@
       default="rgba(0, 0, 0, 0.54)"  value="rgba(0, 0, 0, 0.54)"/>
   <Variable name="blockquote.font" description="Blockquote font"
       type="font"
-      default="$(robotoLightItalic15)"  value="italic normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+      default="$(robotoLightItalic15)"  value="italic normal 15px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
   <Variable name="blockquote.color" description="Blockquote color"
       type="color"
       default="#444"  value="#212121"/>
@@ -2649,70 +2648,6 @@ body.collapsed-header.item-view .centered-top-container .blog-name{
 margin-left:40px
 }
 }
-.post-body .emoji{
- height: 1rem;
-}
-
-h3 {
- color: #212121;
- font-size:16px;
-}
-
-blockquote{
-color:#212121;
-font:italic normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
-font-size:medium;
-text-align:left
-}
-blockquote {
- margin: 0 7px 0 5px;
- padding: 0 16px 0 10px;
- border-left-width: 5px;
- border-left-style: solid;
-}
-blockquote {
- background: rgba(127, 127, 127, 0.1);
- border-color: rgba(0, 122, 204, 0.5);
-}<meta name="baidu-site-verification" content="qjJZT6ArPT" />
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?47dc3fbfa5db15308c8a2c9fa1d719e7";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script><b:section class='footer' id='footer' name='Footer' showaddelement='false' tag='footer'>
-              <b:widget id='Attribution1' locked='false' title='' type='Attribution' visible='true'>
-                <b:widget-settings>
-                  <b:widget-setting name='copyright'>&#169; 2020 W. Liu</b:widget-setting>
-                </b:widget-settings>
-                <b:includable id='main' var='this'>
-  <div class='widget-content'>
-    <div class='blogger'>
-      <a expr:href='data:bloggerUrl' rel='nofollow'>
-        <b:include name='flatBloggerIcon'/>
-        <b:message name='messages.poweredByBlogger'/>
-      </a>
-    </div>
-
-    <b:if cond='data:copyright != &quot;&quot;'>
-      <div class='copyright'><data:copyright/></div>
-    </b:if>
-  </div>
-</b:includable>
-              </b:widget>
-            </b:section>
-
-#blog-pager{clear:both;margin:30px auto;text-align:center; padding: 7px;}
-.blog-pager {background: none;}
-.displaypageNum a,.showpage a,.pagecurrent{font-size: 14px;padding: 5px 12px;margin-right:5px; color: #666; background-color:#eee;}
-.displaypageNum a:hover,.showpage a:hover, .pagecurrent{background:#359BED;text-decoration:none;color: #fff;}
-#blog-pager .pagecurrent{font-weight:bold;color: #fff;background:#359BED;}
- .showpageOf{display:none!important}
-#blog-pager .pages{border:none;}
-
 ]]></b:skin>
 
     <b:template-skin>
@@ -3026,24 +2961,8 @@ var _hmt = _hmt || [];
     <!-- <script async='async' src='https://www.gstatic.com/external_hosted/clipboardjs/clipboard.min.js'/> -->
     <script async='async' src='https://blogger-1259175828.cos.ap-shanghai.myqcloud.com/clipboard.min.js'/>
     <script async='async' src='https://blogger-1259175828.cos.ap-shanghai.myqcloud.com/1468123664-indie_compiled.js'/>
-
-    <!-- baidu tongji -->
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement(&quot;script&quot;);
-        hm.src = &quot;https://hm.baidu.com/hm.js?47dc3fbfa5db15308c8a2c9fa1d719e7&quot;;
-        var s = document.getElementsByTagName(&quot;script&quot;)[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-    </script>
-    <!-- Valine -->
-    <!--载入js&#65292;在</body>之前插入即可-->
-    <!--Leancloud 操作库:-->
-    <script src='//cdn1.lncld.net/static/js/3.0.4/av-min.js'/>
-    <!--Valine 的核心代码库-->
-    <script src='https://blogger-1259175828.cos.ap-shanghai.myqcloud.com/Valine.min.js'/>
-  
+    <!-- <script src='//cdn1.lncld.net/static/js/3.0.4/av-min.js'/>
+    <script src='https://blogger-1259175828.cos.ap-shanghai.myqcloud.com/Valine.min.js'/> -->
   &lt;/head&gt;&lt;!--</head>--&gt;
 
   <body>
@@ -3593,19 +3512,19 @@ var _hmt = _hmt || [];
                     <b:widget-settings>
                       <b:widget-setting name='showDateHeader'>false</b:widget-setting>
                       <b:widget-setting name='style.textcolor'>#58c6d5</b:widget-setting>
-                      <b:widget-setting name='showShareButtons'>false</b:widget-setting>
-                      <b:widget-setting name='authorLabel'>Author:</b:widget-setting>
+                      <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+                      <b:widget-setting name='authorLabel'>作者&#65306;</b:widget-setting>
                       <b:widget-setting name='showCommentLink'>true</b:widget-setting>
                       <b:widget-setting name='style.urlcolor'>#37afc0</b:widget-setting>
-                      <b:widget-setting name='showAuthor'>true</b:widget-setting>
+                      <b:widget-setting name='showAuthor'>false</b:widget-setting>
                       <b:widget-setting name='disableGooglePlusShare'>true</b:widget-setting>
                       <b:widget-setting name='style.linkcolor'>#757575</b:widget-setting>
                       <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
                       <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
-                      <b:widget-setting name='timestampLabel'>Date:</b:widget-setting>
+                      <b:widget-setting name='timestampLabel'/>
                       <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
                       <b:widget-setting name='style.layout'>1x1</b:widget-setting>
-                      <b:widget-setting name='showLabels'>false</b:widget-setting>
+                      <b:widget-setting name='showLabels'>true</b:widget-setting>
                       <b:widget-setting name='showLocation'>false</b:widget-setting>
                       <b:widget-setting name='postLabelsLabel'/>
                       <b:widget-setting name='showTimestamp'>true</b:widget-setting>
@@ -3765,9 +3684,7 @@ var _hmt = _hmt || [];
   </b:if>
 </b:includable>
                     <b:includable id='comments' var='post'>
-                    <!--Valine评论显示区&#65292;请插入合适的位置-->
-                    <div class='comment'/>
-                    <!-- <div data-id='city' data-uid='MTAyMC80ODg1NC8yNTM0OA==' id='lv-container'/> -->
+                    <div data-id='city' data-uid='MTAyMC80ODg1NC8yNTM0OA==' id='lv-container'/>
                     <!-- <div class='comment'/> -->
   <!-- <section expr:class='&quot;comments&quot; + (data:post.embedCommentForm ? &quot; embed&quot; : &quot;&quot;)' expr:data-num-comments='data:post.numberOfComments' id='comments'>
     <a name='comments'/>
@@ -4533,7 +4450,42 @@ var _hmt = _hmt || [];
                 </b:section>
               </main>
             </div>
-            <b:section class='footer' id='footer' name='Footer' showaddelement='false' tag='footer'/>
+            <b:section class='footer' id='footer' name='Footer' showaddelement='false' tag='footer'>
+              <b:widget id='Attribution1' locked='true' title='' type='Attribution' visible='true'>
+                <b:widget-settings>
+                  <b:widget-setting name='copyright'>&#169; 2020 W. Liu</b:widget-setting>
+                </b:widget-settings>
+                <b:includable id='main' var='this'>
+  <div class='widget-content'>
+    <div class='blogger'>
+      <a expr:href='data:bloggerUrl' rel='nofollow'>
+        <b:include name='flatBloggerIcon'/>
+        <b:message name='messages.poweredByBlogger'/>
+      </a>
+    </div>
+
+    <b:if cond='data:imageAuthor'>
+      <div class='image-attribution'>
+        <b:if cond='data:imageAuthor.url'>
+          <b:message name='messages.templateImagesByLink'>
+            <b:param expr:value='data:imageAuthor.url'/>
+            <b:param expr:value='data:imageAuthor.name'/>
+          </b:message>
+        <b:else/>
+          <b:message name='messages.templateImagesBy'>
+            <b:param expr:value='data:imageAuthor.name'/>
+          </b:message>
+        </b:if>
+      </div>
+    </b:if>
+
+    <b:if cond='data:copyright != &quot;&quot;'>
+      <div class='copyright'><data:copyright/></div>
+    </b:if>
+  </div>
+</b:includable>
+              </b:widget>
+            </b:section>
           </div>
         </div>
       </b:with>
@@ -4548,7 +4500,7 @@ var _hmt = _hmt || [];
         <b:section class='sidebar_top' id='sidebar_top' name='Sidebar (Top)'>
           <b:widget id='Profile1' locked='true' title='我的简介' type='Profile' version='2' visible='true'>
             <b:widget-settings>
-              <b:widget-setting name='showaboutme'>false</b:widget-setting>
+              <b:widget-setting name='showaboutme'>true</b:widget-setting>
               <b:widget-setting name='showlocation'>false</b:widget-setting>
             </b:widget-settings>
             <b:includable id='main' var='this'>
@@ -4663,14 +4615,14 @@ var _hmt = _hmt || [];
       <b:section class='sidebar_bottom' id='sidebar_bottom' name='Sidebar (Bottom)' preferred='yes'>
         <b:widget id='BlogArchive1' locked='false' title='博客归档' type='BlogArchive' visible='true'>
           <b:widget-settings>
-            <b:widget-setting name='showStyle'>HIERARCHY</b:widget-setting>
+            <b:widget-setting name='showStyle'>FLAT</b:widget-setting>
             <b:widget-setting name='yearPattern'>yyyy</b:widget-setting>
             <b:widget-setting name='showWeekEnd'>true</b:widget-setting>
-            <b:widget-setting name='monthPattern'>MMM</b:widget-setting>
+            <b:widget-setting name='monthPattern'>MMMM yyyy</b:widget-setting>
             <b:widget-setting name='dayPattern'>MMM dd</b:widget-setting>
             <b:widget-setting name='weekPattern'>MM/dd</b:widget-setting>
             <b:widget-setting name='chronological'>false</b:widget-setting>
-            <b:widget-setting name='showPosts'>true</b:widget-setting>
+            <b:widget-setting name='showPosts'>false</b:widget-setting>
             <b:widget-setting name='frequency'>MONTHLY</b:widget-setting>
           </b:widget-settings>
           <b:includable id='main' var='this'>
@@ -4759,17 +4711,6 @@ var _hmt = _hmt || [];
           <b:include data='{                               buttonClass: &quot;pill-button&quot;,                               items: data:this.labels,                               itemSet: &quot;labels&quot;,                               itemsMarkup: &quot;super.list&quot;                             }' name='extendableItems'/>
         </b:includable>
         </b:widget>
-        <b:widget id='Text1' locked='false' title='' type='Text' visible='true'>
-          <b:widget-settings>
-            <b:widget-setting name='content'><![CDATA[<h4 id="crudo-swe-br"><span>CRUDO SWE </span></h4><p style="font-weight: normal;"><span style="color:#ff0000;">C</span>: ★★★☆☆ <br /><span style="color:#ff9900;">R</span>: ★★★★☆ <br /><span style="color:#cc33cc;">U</span>: ★★★☆☆ <br /><span style="color:#33ff33;">D</span>: ★★★★☆ <br /><span style="color:#3366ff;">O</span>: ★★☆☆☆</p>]]></b:widget-setting>
-          </b:widget-settings>
-          <b:includable id='main'>
-  <b:include name='widget-title'/>
-  <div class='widget-content'>
-    <data:content/>
-  </div>
-</b:includable>
-        </b:widget>
         <b:widget id='ReportAbuse1' locked='true' title='' type='ReportAbuse' visible='false'>
           <b:includable id='main'>
   <b:include name='reportAbuse'/>
@@ -4780,8 +4721,21 @@ var _hmt = _hmt || [];
 
     <!-- <b:template-script async='true' name='indie' version='1.0.0'/> -->
 
-  <!--来比力-->
-  <!-- <script type='text/javascript'>
+  <!-- <script>
+  window.onload = function(){
+      new Valine({
+      av: AV, 
+          el: '.comment',
+          appId: 'UWSdfPCroxNaybzufTvG0lu5-MdYXbMMI',
+          appKey: '0CT5clusVSfoH73lmvAkiagI',
+          emoticon_url: 'https://cloud.panjunwen.com/alu',
+          emoticon_list: ["狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","暗地观察.png"],
+          placeholder: 'Write a comment here.''
+      })
+  }
+  </script> -->
+
+  <script type='text/javascript'>
    (function(d, s) {
        var j, e = d.getElementsByTagName(s)[0];
 
@@ -4793,7 +4747,7 @@ var _hmt = _hmt || [];
 
        e.parentNode.insertBefore(j, e);
    })(document, &#39;script&#39;);
-</script> -->
+</script>
 
   <!--如果当前页是首页&#65292;搜索页&#65292;标签页&#65292;那么代码继续执行-->
   <b:if cond='data:blog.pageType in {&quot;index&quot;,&quot;searchQuery&quot;,&quot;searchLabel&quot;,&quot;archive&quot;,&quot;item&quot;}'>
@@ -4814,70 +4768,7 @@ var _hmt = _hmt || [];
           //]]>
       </script>
   </b:if>
-  <!-- <script async='async' src='https://axu.nos-eastchina1.126.net/blogger/3227649845-indie_compiled.js'></script> -->
-  
   <script src='https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js'/>
-  <!--Leancloud 操作库:-->
-  <script src='//cdn1.lncld.net/static/js/3.0.4/av-min.js'/>
-  <!--Valine 的核心代码库-->
-  <script src='https://blogger-1259175828.cos.ap-shanghai.myqcloud.com/Valine.min.js'/>
-  <script>
-    window.onload = function(){
-      new Valine({
-            av: AV, 
-            el: &#39;.comment&#39;, 
-    			emoticon_url: &#39;https://cloud.panjunwen.com/alu&#39;,
-    			emoticon_list: [&quot;狂汗.png&quot;,&quot;不说话.png&quot;,&quot;汗.png&quot;,&quot;坐等.png&quot;,&quot;献花.png&quot;,&quot;不高兴.png&quot;,&quot;中刀.png&quot;,&quot;害羞.png&quot;,&quot;皱眉.png&quot;,&quot;小眼睛.png&quot;,&quot;暗地观察.png&quot;],
-            app_id: &#39;UWSdfPCroxNaybzufTvG0lu5-MdYXbMMI&#39;, 
-            app_key: &#39;0CT5clusVSfoH73lmvAkiagI&#39;, 
-            placeholder: &#39;Write a Comment&#39;
-        });
-    }
-  </script>
-  
-    
-  <!-- Numbered Page -->
-  <b:if cond='data:blog.pageType != &quot;item&quot;'>
-<b:if cond='data:blog.pageType != &quot;static_page&quot;'>
-<script type='text/javascript'>
-  /*<![CDATA[*/
-    var perPage=5;
-    var numPages=5;
-    var firstText ='First';
-    var lastText ='Last';
-    var prevText ='« Previous';
-    var nextText ='Next »';
-    var urlactivepage=location.href;
-    var home_page="/";
-
-if(typeof firstText=="undefined")firstText="First";if(typeof lastText=="undefined")lastText="Last";var noPage;var currentPage;var currentPageNo;var postLabel;pagecurrentg();function looppagecurrentg(pageInfo){var html='';pageNumber=parseInt(numPages / 2);if(pageNumber==numPages-pageNumber){numPages=pageNumber*2+1}
-pageStart=currentPageNo-pageNumber;if(pageStart<1)pageStart=1;lastPageNo=parseInt(pageInfo / perPage)+1;if(lastPageNo-1==pageInfo / perPage)lastPageNo=lastPageNo-1;pageEnd=pageStart+numPages-1;if(pageEnd>lastPageNo)pageEnd=lastPageNo;html+="<span class='showpageOf'>Page "+currentPageNo+' of '+lastPageNo+"</span>";var prevNumber=parseInt(currentPageNo)-1;if(currentPageNo>1){if(currentPage=="page"){html+='<span class="showpage firstpage"><a href="'+home_page+'">'+firstText+'</a></span>'}else{html+='<span class="displaypageNum firstpage"><a href="/search/label/'+postLabel+'?&max-results='+perPage+'">'+firstText+'</a></span>'}}
-if(currentPageNo>2){if(currentPageNo==3){if(currentPage=="page"){html+='<span class="showpage"><a href="'+home_page+'">'+prevText+'</a></span>'}else{html+='<span class="displaypageNum"><a href="/search/label/'+postLabel+'?&max-results='+perPage+'">'+prevText+'</a></span>'}}else{if(currentPage=="page"){html+='<span class="displaypageNum"><a href="#" onclick="redirectpage('+prevNumber+');return false">'+prevText+'</a></span>'}else{html+='<span class="displaypageNum"><a href="#" onclick="redirectlabel('+prevNumber+');return false">'+prevText+'</a></span>'}}}
-if(pageStart>1){if(currentPage=="page"){html+='<span class="displaypageNum"><a href="'+home_page+'">1</a></span>'}else{html+='<span class="displaypageNum"><a href="/search/label/'+postLabel+'?&max-results='+perPage+'">1</a></span>'}}
-if(pageStart>2){html+=' ... '}
-for(var jj=pageStart;jj<=pageEnd;jj++){if(currentPageNo==jj){html+='<span class="pagecurrent">'+jj+'</span>'}else if(jj==1){if(currentPage=="page"){html+='<span class="displaypageNum"><a href="'+home_page+'">1</a></span>'}else{html+='<span class="displaypageNum"><a href="/search/label/'+postLabel+'?&max-results='+perPage+'">1</a></span>'}}else{if(currentPage=="page"){html+='<span class="displaypageNum"><a href="#" onclick="redirectpage('+jj+');return false">'+jj+'</a></span>'}else{html+='<span class="displaypageNum"><a href="#" onclick="redirectlabel('+jj+');return false">'+jj+'</a></span>'}}}
-if(pageEnd<lastPageNo-1){html+='...'}
-if(pageEnd<lastPageNo){if(currentPage=="page"){html+='<span class="displaypageNum"><a href="#" onclick="redirectpage('+lastPageNo+');return false">'+lastPageNo+'</a></span>'}else{html+='<span class="displaypageNum"><a href="#" onclick="redirectlabel('+lastPageNo+');return false">'+lastPageNo+'</a></span>'}}
-var nextnumber=parseInt(currentPageNo)+1;if(currentPageNo<(lastPageNo-1)){if(currentPage=="page"){html+='<span class="displaypageNum"><a href="#" onclick="redirectpage('+nextnumber+');return false">'+nextText+'</a></span>'}else{html+='<span class="displaypageNum"><a href="#" onclick="redirectlabel('+nextnumber+');return false">'+nextText+'</a></span>'}}
-if(currentPageNo<lastPageNo){if(currentPage=="page"){html+='<span class="displaypageNum lastpage"><a href="#" onclick="redirectpage('+lastPageNo+');return false">'+lastText+'</a></span>'}else{html+='<span class="displaypageNum lastpage"><a href="#" onclick="redirectlabel('+lastPageNo+');return false">'+lastText+'</a></span>'}}
-var pageArea=document.getElementsByName("pageArea");var blogPager=document.getElementById("blog-pager");for(var p=0;p<pageArea.length;p++){pageArea[p].innerHTML=html}
-if(pageArea&&pageArea.length>0){html=''}
-if(blogPager){blogPager.innerHTML=html}}
-function totalcountdata(root){var feed=root.feed;var totaldata=parseInt(feed.openSearch$totalResults.$t,10);looppagecurrentg(totaldata)}
-function pagecurrentg(){var thisUrl=urlactivepage;if(thisUrl.indexOf("/search/label/")!=-1){if(thisUrl.indexOf("?updated-max")!=-1){postLabel=thisUrl.substring(thisUrl.indexOf("/search/label/")+14,thisUrl.indexOf("?updated-max"))}else{postLabel=thisUrl.substring(thisUrl.indexOf("/search/label/")+14,thisUrl.indexOf("?&max"))}}
-if(thisUrl.indexOf("?q=")==-1&&thisUrl.indexOf(".html")==-1){if(thisUrl.indexOf("/search/label/")==-1){currentPage="page";if(urlactivepage.indexOf("#PageNo=")!=-1){currentPageNo=urlactivepage.substring(urlactivepage.indexOf("#PageNo=")+8,urlactivepage.length)}else{currentPageNo=1}
-document.write("<script src=\""+home_page+"feeds/posts/summary?max-results=1&alt=json-in-script&callback=totalcountdata\"><\/script>")}else{currentPage="label";if(thisUrl.indexOf("&max-results=")==-1){perPage=20}
-if(urlactivepage.indexOf("#PageNo=")!=-1){currentPageNo=urlactivepage.substring(urlactivepage.indexOf("#PageNo=")+8,urlactivepage.length)}else{currentPageNo=1}
-document.write('<script src="'+home_page+'feeds/posts/summary/-/'+postLabel+'?alt=json-in-script&callback=totalcountdata&max-results=1" ><\/script>')}}}
-function redirectpage(numberpage){jsonstart=(numberpage-1)*perPage;noPage=numberpage;var nameBody=document.getElementsByTagName('head')[0];var newInclude=document.createElement('script');newInclude.type='text/javascript';newInclude.setAttribute("src",home_page+"feeds/posts/summary?start-index="+jsonstart+"&max-results=1&alt=json-in-script&callback=finddatepost");nameBody.appendChild(newInclude)}
-function redirectlabel(numberpage){jsonstart=(numberpage-1)*perPage;noPage=numberpage;var nameBody=document.getElementsByTagName('head')[0];var newInclude=document.createElement('script');newInclude.type='text/javascript';newInclude.setAttribute("src",home_page+"feeds/posts/summary/-/"+postLabel+"?start-index="+jsonstart+"&max-results=1&alt=json-in-script&callback=finddatepost");nameBody.appendChild(newInclude)}
-function finddatepost(root){post=root.feed.entry[0];var timestamp1=post.published.$t.substring(0,19)+post.published.$t.substring(23,29);var timestamp=encodeURIComponent(timestamp1);if(currentPage=="page"){var pAddress="/search?updated-max="+timestamp+"&max-results="+perPage+"#PageNo="+noPage}else{var pAddress="/search/label/"+postLabel+"?updated-max="+timestamp+"&max-results="+perPage+"#PageNo="+noPage}
-location.href=pAddress}
-
-  /*]]>*/
-</script>
-</b:if>
-</b:if>
-    
+  <!-- <script async='async' src='https://axu.nos-eastchina1.126.net/blogger/3227649845-indie_compiled.js'></script> -->
   &lt;!--</body>--&gt;&lt;/body&gt;
 </html>

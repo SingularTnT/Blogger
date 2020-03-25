@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<div align=center>
+	<img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/blogger-1200x630.png" width="100%">
+</div>
+<p>这篇博文的主要内容是通过Blogger搭建国内可访问的个人博客，包括前提条件、解析设置、主题背景的选择与范本的修改方式、主题背景的几处关键修改以及更换评论系统，从而实现最基本的功能和较为流畅的访问体验。</br>
+</br>
+</br>
+</br></p>
+<p><strong>TOC</strong></p>
+<!-- TOC -->
+<ul>
+<li><a href="#1-%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6">1. 前提条件</a>
+<ul>
+<li><a href="#11-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91">1.1. 科学上网</a></li>
+<li><a href="#12-%E4%B8%80%E4%B8%AA%E5%9F%9F%E5%90%8D">1.2. 一个域名</a></li>
+<li><a href="#13-%E5%9B%BE%E5%BA%8A">1.3. 图床</a></li>
+<li><a href="#14-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4">1.4. 对象存储空间</a></li>
+</ul>
+</li>
+<li><a href="#2-blogger%E8%A7%A3%E6%9E%90%E8%AE%BE%E7%BD%AE">2. Blogger解析设置</a>
+<ul>
+<li><a href="#21-%E6%B3%A8%E5%86%8Cblogger">2.1. 注册Blogger</a></li>
+<li><a href="#22-%E5%9B%BD%E5%86%85%E5%8F%AF%E8%AE%BF%E9%97%AE%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E8%AE%BE%E7%BD%AE">2.2. 国内可访问域名解析设置</a></li>
+</ul>
+</li>
+<li><a href="#3-%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AF%E7%9A%84%E9%80%89%E6%8B%A9%E4%B8%8E%E8%8C%83%E6%9C%AC%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E5%BC%8F">3. 主题背景的选择与范本的修改方式</a>
+<ul>
+<li><a href="#31-%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AF%E9%80%89%E6%8B%A9">3.1. 主题背景选择</a></li>
+<li><a href="#32-%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AFxml%E6%96%87%E4%BB%B6">3.2. 修改主题背景XML文件</a></li>
+</ul>
+</li>
+<li><a href="#4-%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AF%E7%9A%84%E5%87%A0%E5%A4%84%E5%85%B3%E9%94%AE%E4%BF%AE%E6%94%B9">4. 主题背景的几处关键修改</a>
+<ul>
+<li><a href="#41-%E4%BF%AE%E6%94%B9%E4%B8%AA%E4%BA%BA%E5%A4%B4%E5%83%8F%E5%92%8C%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87">4.1. 修改个人头像和背景图片</a></li>
+<li><a href="#42-%E4%BF%AE%E6%94%B9%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E7%9A%84favicon%E5%92%8C%E5%AD%97%E4%BD%93">4.2. 修改博客网站的favicon和字体</a></li>
+<li><a href="#43-%E5%B1%8F%E8%94%BDblogger-cssjs%E6%96%87%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E9%A1%B9">4.3. 屏蔽Blogger css、js文件自动加载项</a></li>
+<li><a href="#44-%E4%BF%AE%E6%94%B9%E9%80%89%E9%A1%B9%E6%8E%A7%E4%BB%B6%E5%92%8C%E6%90%9C%E7%B4%A2%E6%8E%A7%E4%BB%B6%E7%9A%84js%E6%96%87%E4%BB%B6">4.4. 修改选项控件和搜索控件的js文件</a></li>
+<li><a href="#45-%E8%A7%A3%E5%86%B3%E7%BC%A9%E7%95%A5%E5%9B%BE%E5%8A%A0%E8%BD%BD%E5%A4%B1%E8%B4%A5%E9%97%AE%E9%A2%98">4.5. 解决缩略图加载失败问题</a></li>
+<li><a href="#46-%E5%8F%91%E5%B8%83%E5%8D%9A%E6%96%87%E5%8A%A0%E8%BD%BD%E8%BF%87%E6%85%A2%E9%97%AE%E9%A2%98">4.6. 发布博文加载过慢问题</a></li>
+</ul>
+</li>
+<li><a href="#5-%E6%9B%B4%E6%8D%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F">5. 更换评论系统</a></li>
+<li><a href="#6-%E7%BB%93%E8%AF%AD">6. 结语</a></li>
+<li><a href="#%E5%8F%82%E8%80%83references">参考(References)</a></li>
+</ul>
+<!-- /TOC -->
+<p>虽然关于Blogger搭建国内可访问的博文很多，但还是决定自己记录一下，也当作自己博客的开头，“废话篇”请移步我的上一篇博文 &gt; <a href="https://www.weipingliu.com/2020/03/hello-blogger-blogger.html">「Hello Blogger」</a> </br>
+P.S. 由于我自己的博客已经搭建完成，为了写这篇博文我注册了个新的Blogger账号和一个新的免费域名(<img class="emoji" alt="chicken" src="data:image/png;base64,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" />.cf)...<img class="emoji" alt="ghost" src="data:image/png;base64,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" /> </br></p>
+<p><a id="markdown-1-前提条件" name="1-前提条件"></a></p>
+<h2 id="1-%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6">1. 前提条件</h2>
+<hr>
+<p><a id="markdown-11-科学上网" name="11-科学上网"></a></p>
+<h3 id="11-%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91">1.1. 科学上网</h3>
+<p>首先请确保自己可以访问谷歌的Blogger网站。 </br>
+<img class="emoji" alt="link" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAKAklEQVRo3u3Ye1SUZR7A8R8gqaCmZprXvJTmJc3FzBR1vAED4iD3mYEZZpjhPgM43C8elJsXFkG8BOJdMRbMczLRTWpP2+5qWu2mVnv27KnM0x7d1NK2DUP47h+xBgrGGPnHnv09/8yZ9/c8n2fe93nf3/OOyP9aRLkY+2ePLPbKUsZOTxsVNVwkyOmh4XlTasrePP3+rTNfvv/v85y6fOaLY7/fn1u6MsX1IeCbl57+7EP+yCE2U0geeRSxjUO8QePVkyfKPLeO/kX5mk1vNNVQRDyRxGIhmRQSiSGWJIqo5fDF2p010385/tM61mDGRC6VvMLrnOIUjRxhOznEE0ch1U2HPtj9/C/CH6CKBHTksJfjnOUjLrR+xPlr57nAaU6yi9WYWMUmtn9dvqTH+Wo2Y8LIJuo5yn4KrtnK0gxpi9JmWYNXlxT9dvdXh6mjhGhiWEvB55kv9ChfxSaMmKighl2kn9PNbH/UzTlocJRP6pmtN/ZTRgzR5LDqqGF0j/IGTGxmNyXoX/Ub2FlWyGTTlpzPt1KIkTiyrkaE9yhvZjM7KSakvusHjsfQwHUp/1xPBmEkkvSedkAP80UE14vD/bJVo/2PJbKaOHTEExZ9/+we50VE/NwCr6VgQ0d0q27PQ+dFRLz3GkjFRBia6yuGPXReHJRGPxKIR4PmethTD5sXEdUU5b9MJKIhoCXA9wH5rZS2473q7FlMyse9buhIJBz/VpXugfi1lLTx1RSx7O3prm7OdkxggM9tNRYM+OG7/AF4c0MJBoxsYgeFLGPF2cSza0oqQirGVXZrGj6DAm+rsWLEB5+ldvN+fuuJIox1bGUtc5mBF2aKqb117A/Hy7cNqnT5qRH8nw9HTRKReLf4jrGT1+YnNycTShYl5ODOM7ijxB8dVtZT1/Lqn+oMNT9xa4U0GAjDhpFFrYo+dvEJ51RkoCWGfDLxYB56cihjCyWkEYuF9Rz8fN/2fff9XavQYiINPQs/tovPJYQAYlGTQTohvIiOQvY3NfIOb9NAFVmYSKPi+u7XyiZ1NUr04XSCSSYdDUuNdvDriMKNCDSYSCcSN9yPeBcHx0QGWUvX/GbjlQPfHeEQxZiJpeCbotrETs9CrM86DOhZSwpK7ODLyWAxM4kgGCtWAvFY9uNRXxftvPj0rG+r2EsJUcSRe9WWFtT37lHyFOXYUJNNEXF4Fnab30YBKhaxGDUakjHhheKemh/mFfOXtd9tIZ8ILGRfiBjb8Xi+opJc1KSwmTX4Xeo2X8lGNPihZhmB6EgkDI+bnT3l1VN1b6W1biCNMJJak/Ype7fnd7AGLclsoxzzLeWobj/zS9ETTip63PHDgBU1Xk1TH+ksWzM7+NoqVhODnvhPQ2d15MNIppLtJDf7zLWr5ERSRA7+zDmlajFhIZQVN/2f7LxHqDH421SSCSemNTz+h+9yFJV3+CpSmwPn21nxNlFOAnMOe4R6YcKKhtAbAV28XgSN8b0QSSpGwtE2iJOISbGeXLRtfFpzkLudfDlV5KKsFwf/4d6XzSSjRUf4akWvTrs5+rzkj4U4tKg/dR+kUESRSChJD8pvZicF+NeLg4jn4MWXIkjBgIGoRo8uXjUDDd6tZqyoCfxqdtAcVCwnnu328ds61Psftxuea7TNGcSjJeVWjLmLi/Cs8nZEW70fyzRmo6WM7fbw6+7U+7t2Ow5e3qqmFLKIIJqMK7GdFlPtFB80WNHjxzDGsIhMNpHafd56phQDRsqopvDuzZaDal98ayFJGMlsLjyf7XvvW0DInEA0WDGwnME8RTBZJHafDw9dj5nwtnofdM9ez/NX+nP5bCSOKPKbd17ZYo3r13E5BhvD0ZCEAU8G8hzB6JtV3b3xRJKakwglm1JyWfnKvXs9D9cVqdarW6jAQiwFHGmtObQrOWdC6hO+LiK6x0xu6ht6wrFhQMEwnsez2bP7vEaXiYZYCshE9YE4dpajfDxwZ8bV3VSTRhw2Xmp5jYYLjV/sPLHh9bi/zrppQ4OZNPRMYRQzbs/uPi8SfjOmrd4H4z6oqyy/gZqKvEsvc4iNrCKKJHIoJB01s1CRSjA20ghlKCO/mbzADn5FfwNqzKQTieLo/TKVA7QZee+8zGscoZwcoghmMTNwYwMRRLAWG94M/mTETLEnNIsiCCYRC/7MHXr/3KB+oYqMPRXfNLS8TSOVZBDIMrZgQ00OxcQy4fiIIWJfBPz6h3ofiUdT59e/wxScRCKNttLSy9uulJJACDvIRU0q5eTh84nYH377A9CTiJZln3W3j6KX79SVi30Lgxqr29X7yCa3Ifb7DqqDKzFiIQTvc/Z1tS34L1/JdqwtS16UBwnfXSrMWAhBdUHRr/v9UhRV7er9qhYvhTxYqDYqicKCGvXffF262yu/A29rUS6UB42Q5T63o0hCgw6tsrv8jp7iRUKmLW4ykoIeY2tUyUPnRUS8j+vIIIYwUm5aFtrHpzX/bF7RS5WxknQy0RF9O+uVzIn3yy6+iw+cLz8/wl1XvpvQWoCFSHKuFe0pn9bVfx8Vi3eR347vdr2/fyh7++dFNhexnmhiKP76pcN7l3Y2hT22A6zteV5ExGf8yvM2tlBOPHEU3Xr5y9qUQ/PXPZr3SJCTSGnfg+PrdCc/qiOXMFLZwY6e5UVEAmZqL+eym0pWEU8G1d8fuXb8ROPRVzc2bHvrzXeuN1BBAhHksZfdZPQ0LyKinxD590JqOUARiURhI58KdlBFKVnEoieJrRzmIFnfqnueFxExjje9V9RUz1HqKCGLeKIxEYmZOFZTyRFOUEv6xR/f/n5+OLQ1R3EUR3Hym6Apy/5zJY2c5jTHOEwNtdTzBmc4zXG2Yj7pPl5cxFVc7mp9pa/0kT7SR3pLb3lEnMVZekkvcWob+7+SdFzevcRZ+oirDJTHZKiMkDEjZzy7VLsn5d3q7xtvf8xFLvIPLvIhJyn92vTec4myUBR32kJZKAtkgcyX+TJP5socmS2zZKY8K1NkokyQsTJKnpAhMkgGiKv0ld7i3DalO5PoLf1ksAyXcTJZnpM5slA8xFcCHrdML1lSH3fBcjb/0oar8edUv3Ore7RYsiVbcjq0bMmWLMmUdEkRmySJRWLEKOESIn7iLUtknsySafK0PCnDZYgMFFfpK4+0n4SzuMijMlRGywSZIjPlBVkgS8VbVBLkpHWO6GMW04BkZ4vESYJYxCpWSWzXrGIVq1gkQeIkRqIkUiIkTEIlQHzFUxbJPJkl02WSjJORMlQGSX9xaTsLjm2XQxzESZylt7hIPxkgg+QxGSpPyAgZLU/KOJkgT8tEmSTPyGSZLFNkalubJtPufJ4qU2WyTJZnZJJMlKdkvIyVMTJKRsgwGSKDZaD0v+v038E7W4ztl6SjOIpTu9ary9Y+y/HOonPsMOb/o9P4Dzi3orm2OnZcAAAAAElFTkSuQmCC" />测试：<a href="https://www.blogger.com/">&gt;&gt;&gt;传送门&gt;&gt;&gt;</a></p>
+<p><a id="markdown-12-一个域名" name="12-一个域名"></a></p>
+<h3 id="12-%E4%B8%80%E4%B8%AA%E5%9F%9F%E5%90%8D">1.2. 一个域名</h3>
+<ul>
+<li>
+<p>域名购买渠道：</br>
+付费域名：<a href="https://www.aliyun.com/">阿里云</a>、<a href="https://cloud.tencent.com/">腾讯云</a>、<a href="https://sg.godaddy.com/">GoDaddy</a>等 </br>
+免费域名：<a href="https://www.freenom.com/">Freenom</a>(主要包括 .tk, .ml, .ga, .cf和.gq)</p>
+<p><em>个人建议：长期使用的话尽量买 .com和 .cn的域名</em></p>
+</li>
+<li>
+<p>域名的Nameservers：</br>
+如果你在不同渠道购买购买了多个域名，可以将在它们的Nameservers转移到<a href="https://www.cloudflare.com/">Cloudflare</a>中以方便管理，这方面的详细教程有很多，具体可以参考：<a href="https://support.cloudflare.com/hc/zh-cn/articles/205195708-%E5%B0%86%E6%82%A8%E7%9A%84%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E6%94%B9%E4%B8%BA-Cloudflare">「将您的域名服务器更改为 Cloudflare」</a>，我这里介绍一下关键的步骤。 </br>
+以<a href="https://sg.godaddy.com/">GoDaddy</a>为例，在My Account-&gt;Domain Manager-&gt;DNS Management中将&quot;Nameservers&quot;这一项修改为Cloudflare的名称服务器：</p>
+<pre class="hljs"><code><div>opal.ns.cloudflare.com
+rohin.ns.cloudflare.com
+</div></code></pre>
+ <div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/godaddy1.png" width="100%">
+  </div>
+<p>完成以上操作和Cloudflare验证状态有效后，就可以在Cloudflare的&quot;DNS&quot;选项中配置域名解析了：</p>
+ <div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/cloudflare1.png" width="100%">
+  </div>
+</li>
+</ul>
+<p><a id="markdown-13-图床" name="13-图床"></a></p>
+<h3 id="13-%E5%9B%BE%E5%BA%8A">1.3. 图床</h3>
+<p>图床看个人的选择，我自己使用的比较简单且易实现的是Github + PicGo+ jsDelivr CDN组合，Github的仓库用于存素材，PicGo负责上传至Github同时配置好指定域名，而jsDelivr负责缓存加速，这方面有很多详细的搭建教程，移步<a href="https://www.dogedoge.com/results?q=PicGo%2BGithub%2BjsDelivr">「dogedoge：关键词PicGo+Github+jsDelivr」</a>。</p>
+<p>配置好后获得图片外链仅需两步，第一步上传图片：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/picgo1.png" width="100%">
+    </div>
+<p>第二步，复制图片外链：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/picgo2.png" width="100%">
+    </div>
+<p>整个使用过程非常的流畅和方便，虽然目前PicGo有一些图片格式(如.ico)不支持，而且会有一些小bug(重启软件大法好)，但是整体上还是非常方便的。</p>
+<p>这种方式的一个缺陷就是当你们CDN挂了后处理之前博客的图片就比较麻烦了，所以有这方面顾虑的可以考虑自建图床。</p>
+<p><a id="markdown-14-对象存储空间" name="14-对象存储空间"></a></p>
+<h3 id="14-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4">1.4. 对象存储空间</h3>
+<p>对象存储空间服务提供商有很多可以选择的，V站有个相关帖移步<a href="https://www.v2ex.com/t/607505">「求推荐对象存储服务」</a>，以下列举一些比较常见的：</p>
+<ul>
+<li><a href="https://www.aliyun.com/">阿里云</a></li>
+<li><a href="https://cloud.tencent.com/">腾讯云</a></li>
+<li><a href="https://aws.amazon.com/">AWS</a></li>
+<li><a href="https://www.upyun.com/">又拍云</a></li>
+<li><a href="https://www.qiniu.com/">七牛云</a></li>
+</ul>
+<p>由于我的域名是腾讯云上买的，因此对象存储也选择了腾讯云(前六个月免费)，在腾讯云中选择我的-&gt;云产品-&gt;对象存储-&gt;存储桶列表中点击&quot;创建存储桶&quot;，即可在里面上传对象文件。</p>
+<p>需要注意的是，在对象的详情-&gt;对象权限-&gt;公共权限中，需要更改默认权限为&quot;公有读私有写&quot;：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/txyunduixiang1.png" width="100%">
+    </div>
+<p><a id="markdown-2-blogger解析设置" name="2-blogger解析设置"></a></p>
+<h2 id="2-blogger%E8%A7%A3%E6%9E%90%E8%AE%BE%E7%BD%AE">2. Blogger解析设置</h2>
+<hr>
+<p><a id="markdown-21-注册blogger" name="21-注册blogger"></a></p>
+<h3 id="21-%E6%B3%A8%E5%86%8Cblogger">2.1. 注册Blogger</h3>
+<p>在<a href="https://www.blogger.com/">Blogger官网</a>注册一个账号，需要注意的是Blogger是一项谷歌的服务，仅限Gmail账号登录。</p>
+<p><a id="markdown-22-国内可访问域名解析设置" name="22-国内可访问域名解析设置"></a></p>
+<h3 id="22-%E5%9B%BD%E5%86%85%E5%8F%AF%E8%AE%BF%E9%97%AE%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E8%AE%BE%E7%BD%AE">2.2. 国内可访问域名解析设置</h3>
+<p>由于国内无法直接访问Blogger，见Wiki的<a href="https://zh.wikipedia.org/wiki/Category:%E8%A2%AB%E9%98%B2%E7%81%AB%E9%95%BF%E5%9F%8E%E5%B0%81%E9%94%81%E7%9A%84%E7%BD%91%E7%AB%99">「404网站清单」</a>，这一步的主要目的是通过第三方网域设置实现国内可访问。</p>
+<ol>
+<li>
+<p>Blogger第三方网域设置 </br>
+打开Blogger的设置-&gt;基本-&gt;发布，选择&quot;修改&quot;，可以看到如下的配置选项：</p>
+ <div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/BloggerCNAME.png" width="100%">
+ </div>
+<p>根据设置提示需要在你的域名系统(DNS)解析中输入<code>ghs.google.com</code>和<code>xxx.dv.googlehosted.com</code>两个CNAME记录。而其中的<code>ghs.google.com</code>已经被GFW所屏蔽无法直接访问，<code>ghs.google.com</code>不提供实质性服务，而只是选择访问者访问Google全球边缘网络中最快的服务器。因此我们可以从国内可接入的Google全球边缘网络服务器中选取合适的固定IP进行访问，并且设定为A记录解析。</p>
+</li>
+<li>
+<p>寻找国内可访问的IP地址 </br>
+通过一些网络测试工具如<a href="http://ping.chinaz.com/">站长工具</a>，Ping服务器<code>ghs.google.com</code>：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/zhanzhangping2.png" width="100%">
+ </div>
+<p>从获取的监测结果中选取&quot;响应时间&quot;不超时且较短的合适大陆地区IP，类似下图所示，记作「国内可访问IP: <code>a.b.c.d</code>」：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/zhanzhangpingtest.png" width="100%">
+ </div>
+<p>结合Blogger&quot;第三方网域设置&quot;中的另外一个CNAME记录，我们得到了两个解析：</p>
+<pre class="hljs"><code><div>A解析：a.b.c.d(例如上图红框的&quot;172.217.160.83&quot;)
+CNAME解析：xxx.dv.googlehosted.com
+</div></code></pre>
+</li>
+<li>
+<p>DNS解析 </br>
+打开你拥有的域名的Nameservers后台，这里以腾讯云为例，选择我的-&gt;云产品-&gt;DNS解析DNSPod-&gt;解析：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/txyunyuming1.png" width="100%">
+ </div>
+<p>在记录管理中选择添加记录，添加两条A记录和一条CNAME记录，将上一个步骤的获得的国内可访问IP地址作为A记录解析，以及Blogger第三方网域设置中第二条的CNAME作为CNAME记录解析：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/txyunjiexi1.png" width="100%">
+ </div>
+<p>等待一段生效时间后，关闭代理测试一下是否可以直接访问。</p>
+</li>
+<li>
+<p>启用HTTPS </br>
+根据这份官方博文<a href="https://blogger.googleblog.com/2015/09/https-support-coming-to-blogspot.html">「HTTPS support coming to Blogspot」</a>，Blogger已于15年开始支持HTTPS。开启的方式非常简单，打开Blogger的设置-&gt;基本-&gt;HTTPS，修改&quot;HTTPS 可用性&quot;和&quot;HTTPS 重定向&quot;即可：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/BloggerHTTPS.png" width="100%">
+ </div>
+</li>
+</ol>
+<p><a id="markdown-3-主题背景的选择与范本的修改方式" name="3-主题背景的选择与范本的修改方式"></a></p>
+<h2 id="3-%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AF%E7%9A%84%E9%80%89%E6%8B%A9%E4%B8%8E%E8%8C%83%E6%9C%AC%E7%9A%84%E4%BF%AE%E6%94%B9%E6%96%B9%E5%BC%8F">3. 主题背景的选择与范本的修改方式</h2>
+<hr>
+<p><a id="markdown-31-主题背景选择" name="31-主题背景选择"></a></p>
+<h3 id="31-%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AF%E9%80%89%E6%8B%A9">3.1. 主题背景选择</h3>
+<p>Blogger的主题背景主要分为官方的和非官方的模板</p>
+<ul>
+<li>
+<p>非官方范本： </br>
+对于非官方的模板我这里不作示例，可以参考&quot;标签&quot;为<a href="https://www.wfublog.com/search/label/%E9%9B%BB%E8%85%A6-%20Blogger-Blogger%20%E7%AF%84%E6%9C%AC?&amp;max-results=5">「Blogger-Blogger 範本」</a>的博文去自定义。</p>
+</li>
+<li>
+<p>官方范本： </br>
+目前官方提供了&quot;Contempo&quot;、&quot;Soho&quot;、&quot;Emporio&quot;、&quot;知名&quot;等一系列模板：</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/officaltheme.png" width="100%">
+  </div>
+<p>根据<a href="https://www.axutongxue.com/"><em>@阿虚</em></a>和<a href="https://blog.iljw.me/"><em>@JoeyLiu</em></a>的教程建议，&quot;Contempo&quot;模板易于修改和优化，因此这里以&quot;Contempo&quot;主题背景为例进行说明。</p>
+</li>
+</ul>
+<p><a id="markdown-32-修改主题背景xml文件" name="32-修改主题背景xml文件"></a></p>
+<h3 id="32-%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AFxml%E6%96%87%E4%BB%B6">3.2. 修改主题背景XML文件</h3>
+<p>修改主题背景的XML文件有两种方式，第一种是直接在线修改，第二种为通过&quot;备份/还原&quot;的方式上传和下载范本文件。</p>
+<p><em>建议：无论选择哪种方式，修改范本前记得备份。</em></p>
+<ul>
+<li>
+<p>直接修改： </br>
+选择「主题背景」选项卡，点击&quot;修改HTML&quot;即可进入相应页面：</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/beifenhuanyuantheme1.png" width="100%">
+  </div>
+</li>
+<li>
+<p>备份/还原： </br>
+通过&quot;备份/还原&quot;的方式，先选择「主题背景」选项卡，然后点击&quot;备份/还原&quot;即可下载和上传范本的XML文件：</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/beifenhuanyuantheme.png" width="100%">
+  </div>
+</li>
+</ul>
+<p><a id="markdown-4-主题背景的几处关键修改" name="4-主题背景的几处关键修改"></a></p>
+<h2 id="4-%E4%B8%BB%E9%A2%98%E8%83%8C%E6%99%AF%E7%9A%84%E5%87%A0%E5%A4%84%E5%85%B3%E9%94%AE%E4%BF%AE%E6%94%B9">4. 主题背景的几处关键修改</h2>
+<hr>
+<p>上一节介绍了范本XML文件修改的两种方式，这部分以直接在线修改方式为例，通过修改主题背景设计器和范本XML文件达到所需效果。 </br>
+P.S. 以下图片的外链为所用图床(我用的Github+PicGo+jsDelivr CDN)对应的图片链接，js文件的地址为所用对象存储(我用的腾讯云OSS)对应的对象地址。</p>
+<p><a id="markdown-41-修改个人头像和背景图片" name="41-修改个人头像和背景图片"></a></p>
+<h3 id="41-%E4%BF%AE%E6%94%B9%E4%B8%AA%E4%BA%BA%E5%A4%B4%E5%83%8F%E5%92%8C%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87">4.1. 修改个人头像和背景图片</h3>
+<ol>
+<li>
+<p>设置头像和背景图片 </br>
+通常来说，在设置-&gt;用户设置-&gt;基本-&gt;用户个人资料中，点击&quot;修改&quot;，在「个人资料照片」处可以上传并保存头像：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/modifyheadpic.png" width="100%">
+ </div>
+<p>在主题背景-&gt;自定义-&gt;背景-&gt;背景图片中，点击下拉箭头，可以选择上传背景图片或者贡献者提供的背景图片：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/modifybgpic.png" width="100%">
+ </div>
+<p>但是当我们不通过代理直接访问网站的时候，会出现头像和背景图片无法显示的情况，这是因为你通过Blogger页面上传的图片信息都存在谷歌的服务器上，因此无法直接加载出来：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/headpicaccess.png" width="100%">
+ </div>
+</li>
+<li>
+<p>修改范本中头像和背景图对应的代码 </br>
+<strong>头像代码修改：</strong> </br>
+在范本XML中搜索<code>class='profile-img'</code>，大约在3909行处可以找到以下代码：</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'profile-img'</span> <span class="hljs-attr">expr:alt</span>=<span class="hljs-string">'data:messages.myPhoto'</span> <span class="hljs-attr">expr:height</span>=<span class="hljs-string">'data:authorPhoto.height'</span> <span class="hljs-attr">expr:src</span>=<span class="hljs-string">'data:authorPhoto.image'</span> <span class="hljs-attr">expr:width</span>=<span class="hljs-string">'data:authorPhoto.width'</span>/&gt;</span>
+</div></code></pre>
+<p>将<code>expr:src='dat:authorPhoto.image</code>修改为<code>src='你的头像外链'</code>即可。</p>
+<p><strong>背景图片代码修改：</strong> </br>
+在范本XML中搜索<code>Variable name=&quot;body.background&quot;</code>，大约在46行处可以找到以下代码：</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">Variable</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"body.background"</span> <span class="hljs-attr">description</span>=<span class="hljs-string">"Background"</span>
+   <span class="hljs-attr">color</span>=<span class="hljs-string">"$(body.background.color)"</span>
+   <span class="hljs-attr">type</span>=<span class="hljs-string">"background"</span>
+   <span class="hljs-attr">default</span>=<span class="hljs-string">"$(color) none repeat scroll top left"</span>  <span class="hljs-attr">value</span>=<span class="hljs-string">"$(color) url(https://themes.googleusercontent.com/image?id=L1lcAxxz0CLgsDzixEprHJ2F38TyEjCyE3RSAjynQDks0lT1BDc1OxXKaTEdLc89HPvdB11X9FDw) no-repeat scroll top center /* Credit: Michael Elkan (http://www.offset.com/photos/394244) */;"</span>/&gt;</span>
+</div></code></pre>
+<p>将<code>url(xxx)</code>修改为<code>url(你的背景图片外链)</code>即可。</p>
+<p>完成以上修改后，点击保存主题背景，我们再次关闭代理同时清除浏览器cache(Chrome快捷键：Ctrl+Shift+Del)，访问博客的主页时可以看到头像和背景图片均可以正常显示了：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/headpicaccess1.png" width="100%">
+ </div>
+</li>
+</ol>
+<p><a id="markdown-42-修改博客网站的favicon和字体" name="42-修改博客网站的favicon和字体"></a></p>
+<h3 id="42-%E4%BF%AE%E6%94%B9%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E7%9A%84favicon%E5%92%8C%E5%AD%97%E4%BD%93">4.2. 修改博客网站的favicon和字体</h3>
+<ol>
+<li>
+<p>修改favicon </br>
+注意，修改网站favicon的前提条件是使用旧版的Blogger，因为新版的Blogger的布局中是没有修改网页图标的组件。</p>
+<p>旧版Blogger布局： </br></p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggeroldlayout.png" width="100%">
+ </div>
+<p>新版Blogger布局： </br></p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggernewlayout.png" width="100%">
+ </div>
+<p>点击旧版Blogger布局中的网页图标&quot;修改&quot;即可替换为自定义的favicon：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/favcioneditafter.png" width="50%">
+ </div>
+</li>
+<li>
+<p>修改字体 </br>
+如果遇到在移动端出现标题不显示的情况，可以尝试通过Blogger主题背景设计器中修改字体。在Blogger后台打开主题背景-&gt;自定义-&gt;高级-&gt;博文，将对应的字体统一成&quot;Arial&quot;，然后点击&quot;应用于博客&quot;：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerfontmodify.png" width="100%">
+ </div>
+</li>
+</ol>
+<p><a id="markdown-43-屏蔽blogger-cssjs文件自动加载项" name="43-屏蔽blogger-cssjs文件自动加载项"></a></p>
+<h3 id="43-%E5%B1%8F%E8%94%BDblogger-cssjs%E6%96%87%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E9%A1%B9">4.3. 屏蔽Blogger css、js文件自动加载项</h3>
+<p>幸运的是&quot;Contempo&quot;的范本XML文件中包含的自动加载项较少，并且默认的设定代码中已包含<code>b:css='false'</code>：</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">b:css</span>=<span class="hljs-string">'false'</span> <span class="hljs-attr">b:defaultwidgetversion</span>=<span class="hljs-string">'2'</span> <span class="hljs-attr">b:layoutsVersion</span>=<span class="hljs-string">'3'</span> <span class="hljs-attr">b:responsive</span>=<span class="hljs-string">'true'</span> <span class="hljs-attr">b:templateUrl</span>=<span class="hljs-string">'indie.xml'</span> <span class="hljs-attr">b:templateVersion</span>=<span class="hljs-string">'1.3.0'</span>
+</span></div></code></pre>
+<p>因此我们只需将范本XML文件中的标签，简单按照如下方式进行替换：</br></p>
+<ul>
+<li>
+<p>将<code>&lt;head&gt;</code>标签替换为：</p>
+<pre class="hljs"><code><div><span class="hljs-symbol">&amp;lt;</span>!--<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>--<span class="hljs-symbol">&amp;gt;</span><span class="hljs-symbol">&amp;lt;</span>head<span class="hljs-symbol">&amp;gt;</span>
+</div></code></pre>
+</li>
+<li>
+<p>将<code>&lt;/head&gt;</code>标签替换为：</p>
+<pre class="hljs"><code><div><span class="hljs-symbol">&amp;lt;</span>/head<span class="hljs-symbol">&amp;gt;</span><span class="hljs-symbol">&amp;lt;</span>!--<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>--<span class="hljs-symbol">&amp;gt;</span>
+</div></code></pre>
+</li>
+<li>
+<p>将<code>&lt;/body&gt;</code>标签替换为：</p>
+<pre class="hljs"><code><div><span class="hljs-symbol">&amp;lt;</span>!--<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>--<span class="hljs-symbol">&amp;gt;</span><span class="hljs-symbol">&amp;lt;</span>/body<span class="hljs-symbol">&amp;gt;</span>
+</div></code></pre>
+</li>
+</ul>
+<p>修改后点击&quot;保存主题背景&quot;。</p>
+<p><a id="markdown-44-修改选项控件和搜索控件的js文件" name="44-修改选项控件和搜索控件的js文件"></a></p>
+<h3 id="44-%E4%BF%AE%E6%94%B9%E9%80%89%E9%A1%B9%E6%8E%A7%E4%BB%B6%E5%92%8C%E6%90%9C%E7%B4%A2%E6%8E%A7%E4%BB%B6%E7%9A%84js%E6%96%87%E4%BB%B6">4.4. 修改选项控件和搜索控件的js文件</h3>
+<p>在关闭代理的情况下，会发现选项控件和搜索控件点击无反应：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggersearch.png" width="100%">
+    </div>
+<p>怎么肥四，我们打开浏览器的开发者工具(Chrome快捷键: F12 or Ctrl+Shift+I)，清除cache后选择「Network」选项卡，然后刷新页面(Chrome快捷键: Ctrl+R)可以看到如下结果：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggersearchjs1.png" width="100%">
+    </div>
+<p>单击这个红色的<code>xxx-indie_compiled.js</code>，在「Headers」选项卡页面可以看到网页请求的URL：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggersearchjs2.png" width="100%">
+    </div>
+<p>我们复制这个URL在浏览器打开，然后右键保存到本地后上传到自己的对象存储空间中，记得设置对象的公共访问权限为&quot;公有读私有写&quot;！然后点击复制这个对象的地址：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggersearchjs3.png" width="100%">
+    </div>
+<p>回到范本XML文件中，找到以下这行代码：</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">b:template-script</span> <span class="hljs-attr">async</span>=<span class="hljs-string">'true'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'indie'</span> <span class="hljs-attr">version</span>=<span class="hljs-string">'1.0.0'</span>/&gt;</span>
+</div></code></pre>
+<p>删除或者注释掉该行代码，然后将上一步复制的对象地址填入如下代码中：</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">async</span>=<span class="hljs-string">'async'</span> <span class="hljs-attr">src</span>=<span class="hljs-string">'js对象地址(格式为：xxx-indie_compiled.js)'</span>/&gt;</span>
+</div></code></pre>
+<p>将以上代码插入<code>&lt;head&gt;</code>标签后<code>&lt;/head&gt;</code>标签前，如下所示：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggersearchjs4.png" width="100%">
+    </div>
+<p>点击&quot;保存主题背景&quot;后，关闭代理清空cache后测试选项控件和搜索控件是否有响应，这个时候打开浏览器的开发者工具应该可以看到js加载成功，控件点击有反应，URL指向了自己对象存储空间的对象地址以及状态码为<code>200 OK</code>：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggersearchjs5.png" width="100%">
+    </div>
+<p><a id="markdown-45-解决缩略图加载失败问题" name="45-解决缩略图加载失败问题"></a></p>
+<h3 id="45-%E8%A7%A3%E5%86%B3%E7%BC%A9%E7%95%A5%E5%9B%BE%E5%8A%A0%E8%BD%BD%E5%A4%B1%E8%B4%A5%E9%97%AE%E9%A2%98">4.5. 解决缩略图加载失败问题</h3>
+<p>当完成了上面的步骤，我们发布一篇博文到Blogger上，会发现当不开代理的情况下博文的缩略图无法显示：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerthumbnail.png" width="100%">
+    </div>
+<p>根据<a href="https://blog.iljw.me/2019/07/blogger-thumbnail.html"><em>@JoeyLiu</em></a>提供的几种解决办法，我们选择嵌入JavaScript代码的方式。范本XML文件中的<code>snippet-thumbnail</code>和<code>post-thumbnail</code>是有关缩略图的部分，修改XML文件，将以下代码嵌入到<code>&lt;/body&gt;</code>标签前：</p>
+<pre class="hljs"><code><div><span class="hljs-comment">&lt;!--如果当前页是首页&amp;#65292;搜索页&amp;#65292;标签页&amp;#65292;那么代码继续执行--&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">b:if</span> <span class="hljs-attr">cond</span>=<span class="hljs-string">'data:blog.pageType in {<span class="hljs-symbol">&amp;quot;</span>index<span class="hljs-symbol">&amp;quot;</span>,<span class="hljs-symbol">&amp;quot;</span>searchQuery<span class="hljs-symbol">&amp;quot;</span>,<span class="hljs-symbol">&amp;quot;</span>searchLabel<span class="hljs-symbol">&amp;quot;</span>,<span class="hljs-symbol">&amp;quot;</span>archive<span class="hljs-symbol">&amp;quot;</span>,<span class="hljs-symbol">&amp;quot;</span>item<span class="hljs-symbol">&amp;quot;</span>}'</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">defer</span>=<span class="hljs-string">'defer'</span>&gt;</span><span class="javascript">
+          <span class="hljs-comment">//&lt;![CDATA[</span>
+          <span class="hljs-keyword">var</span> postThumbnails = <span class="hljs-built_in">document</span>.getElementsByClassName(<span class="hljs-string">"post-thumbnail"</span>);
+          <span class="hljs-keyword">var</span> postContents = <span class="hljs-built_in">document</span>.getElementsByClassName(<span class="hljs-string">"post-text"</span>);
+          <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;postContents.length;i++)
+          {
+              <span class="hljs-keyword">var</span> postContent = postContents[i].innerText;
+              <span class="hljs-keyword">var</span> imgReg = <span class="hljs-regexp">/&lt;img.*?(?:&gt;|\/&gt;)/gi</span>;
+              <span class="hljs-keyword">var</span> srcReg = <span class="hljs-regexp">/src=[\'\"]?([^\'\"]*)[\'\"]?/i</span>;
+              <span class="hljs-keyword">var</span> imgTags = postContent.match(imgReg);
+              imgSrcs = imgTags[<span class="hljs-number">0</span>].match(srcReg);
+              imgSrc = imgSrcs[<span class="hljs-number">1</span>];
+              postThumbnails[i].setAttribute(<span class="hljs-string">'src'</span>, imgSrc);
+          }
+          <span class="hljs-comment">//]]&gt;</span>
+      </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">b:if</span>&gt;</span>
+</div></code></pre>
+<p>如下所示：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerthumbnail1.png" width="100%">
+    </div>
+<p>接下来找到原有的缩略图代码进行修改，搜索<code>&lt;b:if cond='data:post.featuredImage'&gt;</code>，可以找到两处如下形式的代码：</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">b:if</span> <span class="hljs-attr">cond</span>=<span class="hljs-string">'data:post.featuredImage'</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'snippet-thumbnail'</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">b:include</span> <span class="hljs-attr">data</span>=<span class="hljs-string">'{                                     image: data:post.featuredImage,                                     imageSizes: [32, 64, 128, 256],                                     imageRatio: <span class="hljs-symbol">&amp;quot;</span>1:1<span class="hljs-symbol">&amp;quot;</span>,                                     sourceSizes: <span class="hljs-symbol">&amp;quot;</span>(max-width: 800px) 20vw, 128px<span class="hljs-symbol">&amp;quot;</span>                                  }'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'responsiveImage'</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">b:if</span>&gt;</span>
+</div></code></pre>
+<p>删除或者注释两处以上代码，并且替换为如下代码：</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">b:if</span> <span class="hljs-attr">cond</span>=<span class="hljs-string">'data:post.featuredImage'</span>&gt;</span>  <span class="hljs-comment">&lt;!--判断文章内是否有图片&amp;#65292;有则代码继续执行--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'snippet-thumbnail'</span>&gt;</span>  <span class="hljs-comment">&lt;!--创建一个 div 容器&amp;#65292;缩略图放置在这里--&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'post-thumbnail'</span> <span class="hljs-attr">sizes</span>=<span class="hljs-string">'(max-width: 800px) 20vw, 128px'</span> <span class="hljs-attr">src</span>=<span class="hljs-string">'https://ae01.alicdn.com/kf/HTB1Gb7LUmzqK1RjSZFL5jcn2XXac.gif'</span>/&gt;</span>  <span class="hljs-comment">&lt;!--预先放置一个加载图片&amp;#65292;增强用户体验--&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'post-text'</span> <span class="hljs-attr">style</span>=<span class="hljs-string">'display:none;'</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">data:post.body.escaped</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span> <span class="hljs-comment">&lt;!--这里放置文章全文&amp;#65292;图片从中提取&amp;#65292;样式设置为不显示--&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">b:if</span>&gt;</span>
+</div></code></pre>
+<p>点击&quot;保存主题背景&quot;后，关闭代理并刷新页面可以看到缩略图已经成功加载：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerthumbnail2.png" width="100%">
+    </div>
+<p><a id="markdown-46-发布博文加载过慢问题" name="46-发布博文加载过慢问题"></a></p>
+<h3 id="46-%E5%8F%91%E5%B8%83%E5%8D%9A%E6%96%87%E5%8A%A0%E8%BD%BD%E8%BF%87%E6%85%A2%E9%97%AE%E9%A2%98">4.6. 发布博文加载过慢问题</h3>
+<p>根据上一步的步骤我们成功的解决了缩略图的问题，但是当我们发布博文后，会发现在关闭代理的时候网页的访问速度很慢。打开浏览器的开发者工具，点击「Network」选项卡后刷新页面，可以发现一个&quot;耗电大户&quot;：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerlogoload1.png" width="100%">
+    </div>
+<p>展开这个加载项，我们可以看到它的详细信息：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerlogoload2.png" width="100%">
+    </div>
+<p>请求的URL为<code>https://lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=w35</code>，根据Blogger官方技术人员的描述，和<code>lh3.googleusercontent.com</code>相关的资源是属于谷歌产品服务中的，因此这个请求的地址会直接到谷歌的服务器，很显然会加载失败：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerlh3.png" width="100%">
+    </div>
+<p>按道理我们的图片资源都是存在自己的图床中的，我们在浏览器中打开这个链接看一下请求的是什么资源：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerlogoload3.png" width="50%">
+    </div>
+<p>这个圆形的Blogger icon我在Blogger的页面中暂时也没有发现在哪出现过。下面选择直接把它存到自己的图床以加速访问，在浏览器开发者工具中的单击这个资源，选择「Initiator」选项卡，可以在请求链中找到它的源头在<code>xxx-indie_compiled.js</code>文件中，这就是之前在&quot;修改选项控件和搜索控件的js文件&quot;这一部分所使用的js文件。</p>
+<p>我们打开<code>xxx-indie_compiled.js</code>文件，搜素<code>https://lh3.googleusercontent.com</code>可以找到这个资源出现的位置：</p>
+<pre class="hljs"><code><div>a.src=<span class="hljs-string">"https://lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=w35"</span>;
+</div></code></pre>
+<p>将其修改为：</p>
+<pre class="hljs"><code><div>a.src=<span class="hljs-string">"该资源的外链"</span>;
+或者直接删除
+a.src=<span class="hljs-string">""</span>;
+</div></code></pre>
+<p>将修改后的<code>xxx-indie_compiled.js</code>重新上传到原来的对象存储空间中替换之前的对象，再在浏览器开发者工具中请求后发现该资源可以快速成功的加载或者直接不加载该资源，并且没有明显拖后腿的请求：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerlogoload5.png" width="100%">
+    </div>
+<p><a id="markdown-5-更换评论系统" name="5-更换评论系统"></a></p>
+<h2 id="5-%E6%9B%B4%E6%8D%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F">5. 更换评论系统</h2>
+<hr>
+<p>由于Blogger的评论系统需要谷歌服务和Gmail账户，因此无代理情况下无法加载评论系统：</p>
+<div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggercomment.png" width="100%">
+    </div>
+<p>可以考虑更换的评论系统有： </br></p>
+<ul>
+<li><a href="https://gitalk.github.io/">Gitalk</a>：基于Github Issue和Preact的评论系统，可以直接登录Github账户进行评论留言。 </br>
+具体移步：<a href="https://blog.iljw.me/2019/02/blogger-gitalk.html">「为 Blogger 安装 Gitalk 评论系统」</a></li>
+<li><a href="http://livere.com/">LiveRe</a>：可以通过QQ、微信、微博等国内社交账户登录，但是加载速度比较慢。 </br>
+具体移步：<a href="https://www.axutongxue.com/2018/10/blogger_13.html">「给Blogger添加来必力评论系统」</a></li>
+<li><a href="https://valine.js.org/">Valine</a>：基于Leancloud的无后端评论系统，加载速度很快还可以自定义表情，支持Markdown。 </br>
+具体移步：<a href="https://www.axutongxue.com/2019/05/blogger-valine.html">「为 Blogger 安装 Valine 评论系统」</a></li>
+</ul>
+<p><a id="markdown-6-结语" name="6-结语"></a></p>
+<h2 id="6-%E7%BB%93%E8%AF%AD">6. 结语</h2>
+<hr>
+<p>至此，关于主题背景和相关组件的关键修改基本完成，国内可访问的基础功能也已实现，并且可以达到较快的访问速度。</p>
+<p>但是这样处理后的Blogger还有两处无伤大雅的缺陷：</p>
+<ol>
+<li>
+<p>个人资料无法访问 </br></p>
+<p>点击我的简介区域发现无法访问此网页：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggerpersonalfile.png" width="100%">
+ </div>
+</li>
+<li>
+<p>分享控件无效 </br></p>
+<p>点击分享控件发现无响应：</p>
+<div align=center>
+ <img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/bloggershare.png" width="100%">
+ </div>
+</li>
+</ol>
+<p>后续还有很多可以自定义和优化的地方，如关于访问速度的优化，可以通过浏览器开发者工具进行调试，找到Load时间较长的请求进行分析，例如是js文件就存储到国内的对象存储空间，而对于css文件可以通过参考<a href="https://www.wfublog.com/2013/04/blogger-guide-note.html">「Blogger 新手入門（筆記）」</a>后对一些文件进行打包再存储到对象存储空间中。</p>
+<p>关于&quot;Blogger&quot;这个Tag，后续的博客我可能会更新一些关于Blogger样式的修改、写作方式和发布方式的推荐以及SEO等方面的内容<img class="emoji" alt="bird" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAS1UlEQVR4XuyXW4idVxXH//v63a/nMpPJ9JJeYm42pELG1EwmyUwygxWEihQRsVj7XN/SB9FIkKAILSIUBEWfvKMieYhpkoqtvqjNINT4JNYqpcbaDJO5nPNdXHvvOemr4EwTaebwn7W+j3M43/+39l5rH9a2Ld7Lf/w97P0OgDsA7gC4A+AOAHmrDMzMzO+AlofA2wOCi4c5eAGODAwMbVtVTf23pqr/zNr298MaL//m8vmrWwHgXT0HPHJsfpeS4mlP+49pT/eFVpBSQXAJLjjASACapkbbVGjqGlU1RDUcYH1tsDwYrJ+r2/abL188f+n/CsDM7PwRqfVznh8e8IMI2g+gtA+lNKRS1jznHIwBrSNgIVR1hXowwHBIGqxhsGa0ipW11TeG6+vPvHT5he/e1j1gam6uc2z+0ReTrPhV3h0/UPa3oxybQNknjY2jHB9D2euj7PZR9LooOj2UHYrd3kZOsUfv6W6I8oLe2+l0x9Ms/87REwt/PXTk+IduSwAzc/OP52F6rej0Z4ruNnTGtxsDzmy3g6IokecF0jxHmmVI0xwJxSSlPDPKUeQF8oJUlsgJTNbrGTiUm9g1sO5Osvil6dnZ524rANMn5p+J0vT7edlDTpXL+31rpig7yMhwlpXWcJxkiOMYoVEYI4oSRHGCMDKK4Zs8ThElKWIDhmJKQDICUhCQvKBYdAhW8fTR2ZO/uy0AHDmx8Lk0yc9meR9Z2YeFkJPhsrQmYjIVhQEZDBH4AXw/JMXwKNeeR/Kt/Ci094IgIDghojBCSqCSNEZmYJCyLpknsFmWI8mzD8zMnfwHY8fkLRuDh+cWptM4eTbNukhNZfIcUZyS2ciZUxpCKQghwDiJcRJAiStFY9QCaCk0EGI0DTgayVDXDHwgIJmEkAJCC3DGIDgH5wyMtdtmji/9BcBdtwRA6Afnk6xEUmzs7TSFH8XwggBaakitwZUEZ5wk7Mh3BFxoeQs7lcg8J9ENSjnoApUQ4NXQfXZkuAVYTALsZ9A0FNrJ6WPHf/vry5cOvatb4OjJD3+bGlgQZ8Z4hjhJEEQRgjBAYJa1T9IaSnmQ0oOgXHo+RZLywaWGEIpyQVFACwlhJBWYEDaX0kkpBeVr+IEH3w8QRZHtFUEcUx6b7/7g4emZs/+NAXH69On/venNPbozy7JvpXkXWccs/dQ2syAO4Xlm5pNp5VkzUmqASzvbq+Ea6vUVNFVtlrwDwznAGVoA7r8rE2tN7jSqGmPufgNK0KBta9CVPUDVTX34G88///OnnnzyjS0H8MOf/Pgcja3JlMxneYbIVD+M4SnT0IxxkpbgIsDayhLq5b8jFDeQehVyr4UvVoHhEtaW30LVAFKH1ph5gaJd2iMYNjgQ77zqm32jbt0hqq4rVIPBRz7zxBPPbukW2LN//8NZ0Z0KYzIex2Q8gu8FZF5DeRpCSrusOfOw+vbrSNg17HnwLrx/7z7s2r0P971vF3bu3ot9+3Zjz85JJPw6lq+9TiY4AHazSTrbzOYjMQ5wwd3WUGaCaHieb3uOH4ZmkkxOHT782S0DwBibSKLkQpRmdpZH5kt14I64WkHafewebmXpn+hEQ+wm091eH1pLMFc1W0+hPRS9cezZsxeTHYGV668BTGBUdgehGVXfMbCAGDg3EBiUkgRAO/kefBLd+/qWAKAO3+10eq/d+8DOUkpF5jfO+J5ye17aUUXSqNYH8PE27t1xv32wpmnteWDbxATKsjCWbB+ohkNILXHPjgfQyzhBexMtVxurvrHAWgusdRgsBBJ3IISwDdKuBK1NtBCCg4cOfnLTAQjBz917/w6RZB34RNw3o067HzfSGOcCnEvzPgxvvImJsZ41zRjQHxvDq6/+CV/6/Bfw4sVLmKBrpZWtbNXUMEB3EKyQ38BgbdmNSNPsSIAdk1bMXbvIYEcjF639fmUAKGUjV/KLmwqgKIr9VPGD2ybvgZB8NOKMbOW54FZCMDKwgkCuoz8+bh+01+vhFz/9GWYfmcbXzn4Fj3/0Y/jymTPo9ftgzPmrUCPwQ9y9fQzVyr/sQah1pke1N9cWCoe7x8TGimAGAndFUNIAIOkHHzr40H2bBqCqqsfMWT0rOpBCw9M+lJaUCyhj3FSCGQlUq29hrNdx+9HzcP36Ej79iU/Z4+3i4iKmpqbw1TNnsfiHK6BRCrcfGmuwML8UI47VlX8bZ6OJ8A4M0+2NfU6qHRhwtyUE34BAUkpCcv3UpgFYWV7eZg4dfphAakN5ZJyDGzFmj7nDagjNBijLrn32OIlx8fwv7ZhaWFhAkiSYnZ21UH/0vR8gjIKb465uKmtgYrwPVi2RQTPejGoXW6fa5HVNee3AjJqmgSCMBCSJc/HxTQPQAC9ESQbOGrSsBms5uJBgwjYjG4VQGKxeR5EFCKLQVM125yuvvGINXr16FadOncKFCxfs9R8Xr9iubv3fPAPU9tdfHin8h1dri43jKsP/Xuy1d72+rePcHMfbpk4QjR0rQZhKzYVIlUCgIihCwBulNGmiClBUoC+l5QXxQEgLBEFUoVK1Eg8IHopE1SYpICKSCNqIkgJx0sR2bK/tzXp3bc+cc2aGb/75j2elSrlUbhN9OmeORra+77+fsesu8e8S4rEIEMqTfRAYeEWULLliiggJIJ1O3l0sFltWRQDE3m+bWrJBaX6OFmtLpLQm43kchAl4APlJbkhI16jQXYD6AVsOwwoaIYcJK6Xo/PnzVC6XKZ/L8TkPQngHb7MIvvG5j+gpdJCvFvAcsNsHnmbigXgDn4XPgfUQ/hlAwCJY5Npz963KMFQcGelMaz8xOzuNi4l1pEA+lWni3h8WYMLKXaRcJoVfml/J3p7xqHd9LwvQKlXDg3Dj18Zxvg76gThBKOnzPIiQpoCHqiYaJ2U09PHY4h5WiADEq8E5C8PhEEgwBFIqgXQiHJBOvm8Bduy4e7Clpfl7Wwq5zzVnckhOizQx+Q4tLS8jBLgXALEWggLI3gu4CGnjpsj3mBEtLS7Snr276Qd4nJubQ27opqWl0IMU7d13P3nasBcEQQhfqkJARnvkOMuEWsth4rHFud3lvc+r4RUeEZ0B2Nm+gUMTh0Pv2wN27Rp8adOmzV8eGNiIUtbDxObn56nprQt0/u3/chvc07uG8rjpSWc8SgYOboA2RoONp7mtrdZr9PHRj9G+/fvo1OunaGZmJnRh/nlf/NJDVKlUQMy6bpLJV6sVGhu7RCbZSmmQN54CDx2RDhGEpGUPGNlzUvR9BpGImqCBOxZg69ZNG3t7ey7s3DnSPTT0UZBfy+Q9z0fZKtEiSJ19a4yuXr5M/cW7aB3qfQajqq6WyZh+kPfCDCwhoKlWq9KJ3/yKvvbVh+mNU2/QlsF76IWXn+cEWatXI1elJE+Lc6UZunx1nGpuEiU0B/JuRN6EFhdAXM8I+XAf8F68gasDIC10kNxwRwIMD/f1bdy4YXx0dIi2bx+htejYMqjlxvjkuoqU0jjDtVd7jmaQEGenp2ihWuULz1Suly6+c4l618DVO7owmOR4UKnW6hzTf/jj76iEMOjs7GR3vXFjnsun1oaqlTJNTl6n6XKdgqYsZn+ElHJhTQ1yUcwbIcxkWQQWhoEzAcKksWokTOG2BUDMpB94YPTSrl07aGRkB4iuRyubJaIUBDDcd+fbXBDoRq3upnfH/0fzcyV2Y3c9zjsKUL6DJudrNFW6hrYUWVguMbLo8lqxhpclU/UqVxDlKHhHjebL81SpLpNLGUq2tiOUPIjiikWBkJThqhO5u5FwMOz+VhSsHsMHuIcIuFnK3LYAfX09Zzo7ezJ7kbRgJWlzmyFM1OIS+SDQwjc/m/vX09/+/m+q3KhQGVZdRlJEaeMxOItmyac8W6TiuGTqDjJ5ja2ZYncnTlTaC8gAfgKzRHM7pQOfyXni8mJRQMfWN+IRcuZZIfg9CQ/sbdIM8O+2BMjnWw7hinrX2bMXQsujYTlIjqPZ9e1gkkyaUBC+gurv78PVdI7KofWAer2Oa/AOYpkCrv8gHY68fCkadbtewLUbpY6zdiKFmk/4ucbDs7KuHhM0DQKAjLGW5xXPlrwR8uGq+VzAJdK5pQBw/dbe3u6fhlbPwkVfffUk+vgmOnLkMMdnvb7IhJCkIUCS63kvBpntH+mnM/+4xmEwN4vZv9BNiWxYtOIsnPCilf9zlpa9H8epJe6vWNwHtJQ8JiSWFwEaYHRDXvD5/UgIY6/J/LlbdoIdHbkT0UVCE5DmWv3KK6/RU0/9iJXN53MUOVKSayveRVLroqF7t+HePk2TE5M0W5pGsquS0i6ZgElxxtZsSYG1TEhGPoBqwBiBtu8qJsUw/E5E3rfubkhzXrA5ASugtSYtIWKrBnLBtZt6QFtbYm0m0/kVzONiNbYeROik06f/SrOzc/TMM0/w15xKZQECpYAm/srTv2kz7cTEee5fE1RCfa/Vl/hrUCq0QlSPpUOTNpdXyc6yBmI16wm85+SGvZCIE6GRuLdfkbHaM14j4SGkeEL47P/nFiGQOQHrsoKO47L7pVIaSHIJO3fuTXr88Sfp6ae/i3kddbtWB2osxkJtEZkeI6iveDDq7SlQczrBlpOeXcjbfWAnuCgERChx1diNOSeIGDFh6QHY8vElqBFxrEDaYPUlL4TiJ87cVIBstlllMmlqyzZRviPHd3zZXAvIZ9ja6dQAue4yvfzSi3inlZaVQ86yIhdi1WHxmetT1IXB5b49exBK7fyufOtv9AArBpNhIWzr6vlCVJ4Dn60vVUDeEUGELN6RpAewJwBieeslLACA/6/dVIBSqfqFvr5CnzLq+1qbh9OwfB4zfCcyOnID6n42utPzAorSWxIkIm+ZnpqhK2NjtO/TD9LAwABffxutmCjDTm9BRA5syHixIHEf7wt5EcQKYJ+5rovVGTiLy6R1e8AAnpBn75ibHJu8SQ4QTEzMT2D5OhLcocHBvm/NlsuHu9HUFwpdyAUdmM/bKZ9t4S88xhgmP1sq0cW3L9CmbSM0Mrqb6rUKFI/IgwUFZC0sQwwTxyoWZEIy4QW2EogQDAkNwA47IoiABWBBG0phY2nkZujFO/o2CNd0sfwwRLG4bnRi4vq38/nWz6M8ptra0NYi+YEdhpUFulFeoA2DwzS6/0FyFmtMXm42JGnJcCKxa+OdWAyQs6HhATZpvkcAmzAbQyWCdX1Psr8BtPawGqySC5zgx6vyJzLF4pq9+B73UL6rcAiDHrV1rKHitiHatGUrJUACt0TypVYuJWzcWiGEGBMQSBhITAfyDgsW5wvfnltP4EbKkgcMk1dKkXbCvBTmJwcjO7DonBwfm9i/KldiV67Mnr548drhtsLA+PriMPXfM0wt2RxV52cw2y+QUg5ppXh40SF0BANIredzA3jY85mSVfoBzwBa+v0Ggp6FtLraEwsLeSPW1krxuVLYA65Sj676t8Hjv/xFV4JoTxBojnE+lA7PD2yN1nZgiSzUOL0JCWMTWmOM21Jonxvd3WfYUgd4LJz9sKKUANVJuRBiWT0/dXX616suwHNHj54NUsknU4lEfFUa3v1ZQkJcujcZXqLOT8fdoBXCkgaktsszr7w38uwzaeOJ5QGPrR4CpJ0QLq+u68yOj03e/4F8HT548KD+2fHjhij4JA9ItFLPpVePLW88FSUmw4hrdly/ZRVXb8wR3OLGJdBrnPo0nkPiWsi7mlwhr1zAmHuPfPNIZfUFEBx45JG/PPvzZ3cjkRaDleRkW1K94gFGifU1n8UELHkL0+D6hsm+h7y1vKfF5TmHYHVDRNZ3sTrK3T/97jTfwX9QAogIj77w7HPHPoV63heI9cXdbXJjogp7S9pfWWWIsS7PiKdAoKHtFQFtxleGyRtXi8VX3B5Qn52+Ov2nD+0vRA5+48CJnxw7ehcsNCxdGce9TGSSocUTOFNLaJh4zpf6b3t/Gw6N1gZ8PGuxuCK9Qj6C4zjIr2rn1NWZPzOBD0UAwWMHHvv90WPH3lTK/Qzcs9kIaW0Jq0gIJeUKe9umMrSQNWxpI0LZWGdIrEMAh+u9WNwV93dfn3SuD1XHF8f/374Z4zQMxWD4/203tCtLuiFFFDGAxMLKzg0YOAEDN4CJCzBwBk7Awo4Qp6CgBlWCAVZoMU967xFuQCo9L86aX1Zs5//876zwZGdybmZng8pM1aDJLWbIJCEkIDFTmEyMTIx5xmDSRIhuUcojbhQ15s/Fe/htdtI+zq97B0s3282xKE9VdF8HBhV2/mHC3SBEeu2Ezf2O4vBoknRrb97x4wf1LVTJxcvT/LL3tHjd1PXQhkcCHIrwQMxGmeoQCsC/LJDnAki+n3ddIER4vvGFX7XP7e3K3QvkGG+Mm6rSXSy5ScWeU7YEXHf4mgMjOi10lQ+Cr0GEqcMf+M272XR235uDidWPcjNUBCgCFAGKAEWAH6LbqjNR+BN+AAAAAElFTkSuQmCC" />。</p>
+<p>Markdown写作方式的推荐：</p>
+<ol>
+<li>(★★★★☆) VSCode </br>
+VSCode拥有丰富的插件，写好md直接导出html复制到Blogger上。</li>
+<li>(★★★☆☆) Typora + Chrome StackEdit </br>
+Typora专注优雅写作，然后将源文件复制到Chrome的StackEdit插件直接Publish，非常流畅。</li>
+<li>(★★☆☆☆) Blogger + Chrome Markdown Here </br>
+直接在Blogger后台在线写博文，无法实时预览，写好Markdown格式后通过Chrome的Markdown Here插件在线生成html。</li>
+</ol>
+<p>这篇博文主要参考了<a href="https://www.axutongxue.com/"><em>@阿虚</em></a>、<a href="https://blog.iljw.me/"><em>@JoeyLiu</em></a>、<a href="https://www.lawpai.com/"><em>@LawyerFu</em></a>和<a href="http://www.geooll.com/"><em>@臧超</em></a>的教程，并且得到了&quot;谷歌blogger交流群：125691905&quot;的帮助。</p>
+<p><a id="markdown-参考references" name="参考references"></a></p>
+<h2 id="%E5%8F%82%E8%80%83references">参考(References)</h2>
+<hr>
+<ul>
+<li>
+<p><a href="https://www.axutongxue.com/2018/10/httpsws1.html">Blogger搭建国内可正常访问博客（超详细教程）</a> </br></p>
+</li>
+<li>
+<p><a href="https://sites.google.com/site/heartsoverview/systems/tips/resolved/ghs">找到一个可以替代ghs.google.com的地址</a> </br></p>
+</li>
+<li>
+<p><a href="https://blog.iljw.me/2016/09/blogger.html">Blogger 国内访问心得</a> </br></p>
+</li>
+<li>
+<p><a href="https://support.google.com/a/answer/112038?hl=en">CNAME record values</a></p>
+</li>
+<li>
+<p><a href="https://support.google.com/blogger/answer/6284029?hl=zh-Hans">为博客启用 HTTPS</a></p>
+</li>
+<li>
+<p><a href="https://www.wfublog.com/2015/10/blogger-https-guide.html">BLOGGER 終於支援 HTTPS﹍搞懂安全傳輸協定的重要性及影響</a></p>
+</li>
+</ul>
+
+</body>
+</html>

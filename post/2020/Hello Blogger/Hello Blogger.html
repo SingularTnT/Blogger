@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<div align=center>
+	<img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/Blogger_icon_2017.svg.png" width="15%">
+</div>
+<p>折腾了几个搭建博客的方式，不是被墙了就是换电脑换系统要重新配环境，放弃了不想折腾了，选择拥抱Blogger。</br>
+这篇博文主要是关于我搭建博客的想法，介绍一些试过及了解过的搭建博客的方式以及为什么选择Blogger。</br>
+</br>
+</br></p>
+<p><strong>TOC</strong></p>
+<!-- TOC -->
+<ul>
+<li><a href="#%E4%B8%80-%E5%85%B3%E4%BA%8E%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%83%B3%E6%B3%95">一. 关于搭建博客的想法</a></li>
+<li><a href="#%E4%BA%8C-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%96%B9%E5%BC%8F">二. 搭建博客的方式</a>
+<ul>
+<li><a href="#1-%E5%BA%9F%E8%AF%9D%E7%AF%87">1. 废话篇</a></li>
+<li><a href="#2-%E5%87%A0%E7%A7%8D%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%96%B9%E5%BC%8F">2. 几种搭建博客的方式</a></li>
+<li><a href="#3-%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E">3. 补充说明</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9blogger">三. 为什么选择Blogger</a>
+<ul>
+<li><a href="#1-blogger%E4%BB%8B%E7%BB%8D">1. Blogger介绍</a></li>
+<li><a href="#2-blogger%E5%9B%BD%E5%86%85%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98">2. Blogger国内使用问题</a></li>
+<li><a href="#3-%E9%80%89blogger%E7%9A%84%E6%83%B3%E6%B3%95">3. 选Blogger的想法</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83references">参考(References)</a></li>
+</ul>
+<!-- /TOC -->
+<p><a id="markdown-一-关于搭建博客的想法" name="一-关于搭建博客的想法"></a></p>
+<h2 id="%E4%B8%80-%E5%85%B3%E4%BA%8E%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%83%B3%E6%B3%95">一. 关于搭建博客的想法</h2>
+<hr>
+<p>由于懒癌一直没有写日记记笔记的习惯，接触博客后也基本没有怎么写过博客。但是我的记忆力极差，经常学过的东西隔几天就忘了，所以我觉得我适合在某个非常细分的领域内走下去，然而现实是非常残酷的。为了不让很多走过的路再走一遍，我打算开始用博客记录一些技术内容和生活日志。</p>
+<p><a id="markdown-二-搭建博客的方式" name="二-搭建博客的方式"></a></p>
+<h2 id="%E4%BA%8C-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%96%B9%E5%BC%8F">二. 搭建博客的方式</h2>
+<hr>
+<p><a id="markdown-1-废话篇" name="1-废话篇"></a></p>
+<h3 id="1-%E5%BA%9F%E8%AF%9D%E7%AF%87">1. 废话篇</h3>
+<p>搭建博客的方式有很多种，主要分为静态博客和动态博客的区别，V2EX上有一个关于这方面选择的讨论贴可以参考一下 &gt; <a href="https://www.v2ex.com/t/154179">「静态博客生成器 OR 动态博客？」</a></p>
+<p>我个人其实兜兜转转了很多次，也用了很多方式，但是回头发现自己的大部分时间都拿来试各种博客框架以及改前端去了，反而没写几篇博客，有点买椟还珠的感觉。沉思后觉得还是背靠谷歌Blogger放弃各种花里胡哨的操作。</p>
+<p>我的迁移路线：WordPress -&gt; Hexo -&gt; Hugo -&gt; Blogger</p>
+<p><a id="markdown-2-几种搭建博客的方式" name="2-几种搭建博客的方式"></a></p>
+<h3 id="2-%E5%87%A0%E7%A7%8D%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E6%96%B9%E5%BC%8F">2. 几种搭建博客的方式</h3>
+<p>但还是简单介绍一些使用过和了解过的搭建个人博客的方式：</p>
+<ol>
+<li>
+<p><strong>WordPress &amp; LAMP</strong>:</p>
+<blockquote>
+<p><em>WordPress是当前因特网上最流行的博客系统。  --Wikipedia</em></p>
+</blockquote>
+<p>想必这个不用多说了吧，<a href="https://wordpress.com/">WordPress</a>是目前最受欢迎的网站内容管理系统。我最早就是用的这种方式搭建动态博客，买了个VPS和域名，通过<a href="https://lamp.sh/">LAMP</a>环境和WordPress在CentOS7上搭建的博客。但是后面服务器IP被墙了然后就考虑转移到静态博客阵营。</p>
+<p>优点：功能强大，插件丰富，而且有CMS </br>
+缺点：需要自备主机，国内需要备案还是挺麻烦的 </br></p>
+</li>
+<li>
+<p><strong>Hexo &amp; Github Pages</strong>:</p>
+<p><a href="https://hexo.io/">Hexo</a>可以说是目前国内非常流行的静态博客框架了，插件丰富也有很多的贡献者做的主题可选，基于Node.js对网页进行渲染再部署到<a href="https://pages.github.com/">Github Pages</a>等平台进行托管。如果不用Github actions或者Gitlab的CI/CD，需要在本地环境进行HTML生成再部署到线上，重点是本地环境如果你装了很多插件换电脑或者换系统的时候会非常不方便，另外Hexo+Github Pages速度都很慢<img class="emoji" alt="turtle" src="data:image/png;base64,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" />，另外注意一点就是Github Pages把百度爬虫ban了，所以得后续考虑cdn之类的方式，这里不赘述了。</p>
+<p>优点：简单易用，插件丰富，部署方便 </br>
+缺点：生成速度非常慢，配置环境麻烦 </br></p>
+</li>
+<li>
+<p><strong>Hugo &amp; Gitlab &amp; Firebase</strong>:</p>
+<blockquote>
+<p><em>The world’s fastest framework for building websites.   --HUGO</em></p>
+</blockquote>
+<p><a href="https://gohugo.io/">Hugo</a>是由Go语言实现的静态网站生成器，它不想Hexo需要依赖Node.js和nmp去安装各种东西，直接简简单单一个hugo.exe(Windows)搞定，而且就如Hugo网站吹的那样，它的生成速度非常的快，不像<code>Hexo g -d</code>那样等半天。<a href="https://about.gitlab.com/">Gitlab</a>不用说了，和Github类似，主要用其CI/CD，另外Gitlab比Github好在可以被百度爬，但是我们这里只托管源码。实际的网站部署在<a href="https://firebase.google.com/">Firebase</a>的Hosting上，由于Firebase对移动应用的帮助非常大，谷歌家的东西用起来体验非常的好。但是<code>firebase login</code>的验证问题需要梯子，有梯子也不一定能解决<img class="emoji" alt="frog" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAASnklEQVR4Xu2bW6xlV3WmvzHnuu19zj7XqnJVucplfCvj66UB27QNBuFwMd12N+KBCJS0kgekSFFIopAoENEGqZG6FcFDJB4b9UPTajXgJDixYoiiEIwNsV0pG3ynXBW7qlyXc/bZ97XWnKP3XGtJZx+VmrLbx7y4Svo15r7MMf7/X2POmmtpH1FV3s7/DHDBgLczLhhwwYALBlww4IIBb2NcMCB6swnktsXbjOd3VOT9JpL9iIII6vVFVH7knfs2j/Ue0Dd45BQR4T2de421/xHR94qRy1EFFXypx0T1H7zhL/TH3R+/Gf7/30dh2S8t2bvwvyWSeyS2yFyEmY8hs2AtFB6dOBgW+LEb6aT4c7/WvV+f0vyX5r1OErO8+GeSxr9vMtuiHSOphdiAczB2+H6BDkq0cGip39NXNz6px3T0K1sC8p72ftnTOWZSe49ZzoiuWCS+ZSfx7XuI37eX9EP7yO45QHrPJSR37SO+ZrUVXbz0p9GB3ev2gzt+9/+VN3wWvhO+G+aEuSFHyBVyhtyhRqgVaobagUPgEjj9SgyQWzo7ReyzpmVXzY6M+MoloquXsXsWkHaCUQMTUC/Y1TbxrbtI773UJx/Y4+Orl1vx3s7Xk4/veVruXLoMACCMw3vhs/Cd8N0wJ8wNOUIuJoTcoUaoFWpWtQOHwCVwCtze8j1ArDxqUtMKhe2li8juOSSJEFVwQClACX2POz1BMovszSR61w7sVYvqnjgj7kjvGlnLXozu3fNxgOTS5b+2y+k0Xwd786rKQiz++Aj/4hgdO0QUrAGkHqtCEiN757FGQBROjVre+0eBy96yPcDe0vkyqfmCWc2ILlvE7JnDtBOIBYktZiEGYwAFD76Xw8RDCcxZzBUdzFJM+S/ruBc20LURALLcwl6xQHTDEn69wL/Qg4GDCEgNppOAARDwHr9RoIWDQvHDHH98QPlSF39mHOp9xT3e++K2LwG5UeawfEHaEeaiFrIS1l8ERqEV4S2M/vIY/S/8M4MvPUH+g1dhLlI6MWSm3rwOr+GODomuWcReu6xmX4eAMA7vhc/Cdxi7ek4nrnKEXCFnyB1qeAu06tqBQ+ASOAVugWPguv1LwLR+m8hgFpJq85GWRY1CGpQXFP/tWfJfdAEqlD/rkvzkrGR/cC2aAkbAKfryEDcokcVEwjICkLlY3PM99HQOsQUrEBvEGsb/9WnJnzgNUME9twGPnCH+w4OQGnBl4FJx0rMT3LCEcsoVvr69HaB8ksQgC3HlvogACrHgvvkyfio+EsuX77+fz/3e5wDwU+Ll/zoC8xaEWlhq0PUcPTECKxX0tVF4rxZkBYQwp5rrG/EhZ8gdaoRaoSZxzUFEAqeaW2Iqrtu+BDDmekltvakF0urRQPiFHslPNiiBT//GZ/ijz3+eL/3nL3H33XdTAvbhM/DKENJGWCR114gisUEiA9BceUCAVMKcam4JIVfIGXJXNUoINUPtwKHiIlZqbqmtuG6rASISTbFAbGryeFBFRVUO9TQxCVma0Wq1+Na3vsUDDzzA8vIySZKQTQx6aINqblNREoO0Y2Q+qmDagbgBI01X1XPC3JAj5Ao5Q+5QI9QKNUPtwAFVwENzYApcA+dtM4BrMRiQSEACwJfOe+cK+0qhWafF0vISjz32GA899BAPPvggTz39NKurqyTtFtHREU49AGLrDpBWBFlc7yWZhUTqzoLqu9GRUZgbcoRcIWfIHWpUtULNUDtwCFwQQKTmaGrO22ZAOL6qal4XUdR5xSvqNbIlJklTOp0OZ8+erQj+9Kc/ZTQaMd+ZJ05iZOBBAAvEUnUAmUFiIDL164DwWcNIRj7MDTlCrpAz5A41qlqhps0xgQO+4SQKAoFr4LzdB6EjqlzlvddIRVAV8UppFBEhTdMK3nsAjDGoKqWOcGktWjyQNFfbACJNVxhIFC0VYotE4BJBVEnihDSRLXkBRlJQRop4NaIKKjjvVRUJXLf9JCjefx+vV4mKqHegQZCnXBWKl3M6UUQcx1vmTCYT8uEEd2AJk1lAkSTa7DsnIJ6mfcEKEgsmMbhLYvLHNuhYG4zdkrcoCopRHmpXHFQVvCdww2vFdbs3QWNa2XUUJZQOqoIKheIOZmz0Nxj1BwBEcVTBqzJcH7DhB+i7FhEPSCPYKVooWpboxKGFh1IRI2AM4gS9eYkNN2DY7Ve5mrwAoVaoWdWmaLio1tyKEtNqXRc4b4sB8u6dB9O7dp+IVufvxIPmZe24AiOHXN5mcKnh5AvHOX3qNBvdDbrrXU6feI2TR48xuX0Be9kSjGv9OIUiwEMeoOg0alEDrzDx1X3B5D0dTr78SsgVcobcoUZVa3DAhNoVB1RR9RU3FKLl9p3p+3afkBsXDr6pJZC+u3Nd1m4flsUIs5ziew4mDUlAMOAN9tMX0/v6CwyP/IJEWqBKzhh/6TzZb10OowJKUC8gCgigoDRQ8DRRa5NKQ/yb72D0r4c5/vJREslAhNyPcIsx8a9fgZQCXlAVcCC5YjsZZi5FhZ2ptp5Jb1y5fnLo7FNv+GZI3iXtLNtxwqxkneomJxhgwfdHyM4WksUQASJIJ8IPSoqHjuMOrUNsiG7bSXrfJUg7QsYejIDI1iLKZjd5hdmxU0gNPi/Jv3eM4tHTUCjRdYvEv7YbacfQLzdvvIYlnBli5toYB359At0cvzbujSdndutPdfiGDGjfvvqPdjm9g5UUWUhg3kIWV4Q1iSCi2clBBcgs0okRpxAZJLLoxNdCREA4RzywKVpnxoB6hQAraAaS16/VKAw9jB2im41EoUjpEDEwLKYo0Y0cXctxa5Mfjn585s7XvQTaty5+ynSyO6qTWttC20ASI5Hgk6gubKQWHmAFKYGeQ40BcYDfFH6uydTGz7Y/W5cFDUpFRh4MoJup1ZiZpShICiQGcQ68bTojgtJjC3dH+92Lnxr+pPs/X5cBJoq/ZkLrBrQiiA1EQCSIAFKLF5HN+3ShEeIBQWWrElQBqaNy7vuzBrB1KirgZifR1BZEFfWKiEEBxCARaDAji6DlpyiRYfQ14PwGZO9e/KhdyHZpmJza2tW4PmOrEYianm+6oJGPNu8hM+yFc8Uy2/Jsqj3XABSthUKTm0osIgghgiJ1DEFozDSIWjTWWkMaQeZ2ZbcsfnT8ePdvztMB5rcJgiMD1tStbgBpBHtmWntGl6mIbRXckOU8T53ObX9FoWn1xgTZsmw2vabh1YhHtOZrQGOpNGhsK2Cn2uCXGyDW3qVW8NYgVjDGgARIQENmljgzrxvBMEOIc3d/T2OobuZR2TIWFMzWeaJsMUJnUzdGa8XVgxhUtTJBIzOFoMbedd4loGJWMKYuHowQg0FQpIpI0xEemOHNbKtaNoVvNQzMTOt4ZkQryMxYZ/eLrWpFm7kowGaHIHUKI0DgWYMqGjBm5XUY0Gwk1jQvlMZwtjSe1BBAm82QKgpimtdNhBC3Lh0JpLYehraOXR3VaRXxM5/7zQ6T2X3E1BzVz3aloDMX4rwGgGx2twhCI2S2TREws4ZRC7ebnYMFmmWEbYxpWYgEnThANvn4AMVkEb50MCqhBJxvToUe9TMHJJnpAN3kXRsn4HWmo2dXl5zfAPWKqKKFR0RQMeBn6W4KRmggjVBTCZSoig2a1/MR/pkNdFwS3boDJjpTFIgN5WOnITXYqxbQfgGlQcrKgAYKRtHGGJygFmS2g2bPV6bxqGi62Ov5DcCDOiXxULw6RPbPYectWrX2TGs1V1pkZhwH4aYSI7HU48QgU5jVlMkTL6FncpKP7UPHrja4ISWJpfjRCWQpJXrvLgTQ5oZJC0FKA4WrxIihNmIKVFFPY4IACtaAgO+X8OqIOLHkTsGf/24QLX3fh8KRcNmqoXzkNcrnelVxnxo0qwUycwokasTHjeDUQGaRdlRjfopOhF2Zn6INiymymMBCXB2zZRpZSsLnNeYthDktW+eZglggsY3JNSRE03AxQCY1x9xRPt+ruL9j1YKFoMmXfnD+JeD8D03hPzLsFox2z3HtzXDo70/jXuph97Qwl84j+9q1AMAoQG0CdtOIJjaPuyzeeRb/03sQjRmbUxDEiQH14AFRlj/3ARw5E/9a1RHNlUVVEW9Q9XUdL01NwIAHtDuBY0P8y33K4yPcmYIb379Mt5MyOjHAFL7Sdl4DcO6bTPxHbOE4dmzM3LVzXP8+OPyjNdrdgvbPerj5iOJAa4o5yinMSoZ0Yogt1lJFNSCRhSREARWK5QGkFsZAJJvnhhLwSr6rh+Yl0hU0AiIDWus1wcRqHwAtHToo0LUx5uiI+EifeBqjYclQYKI65bxEeXGbY08H8c1tvHP//XXdDUY37ejblWSO5QS/kHDz9fNMjvR45vtr7BdhuQTGJbn3DFqW0UrCZF8Lf0kbd2Aev7dFtCNFVzN8J8Fmtm7nROqOsBbZsvqaja1waB7IKm5Y4icO0y2Qs2Pc2QlyfER0tF+Jzl6d4kzB3NiRGINvWbpWOOaVqz+0TPKOeQ4dHiDdHNZz3Ho+Kh8/3X59N0PO/Smj8muSGmxkeOKZPjff0OHW1Zinv3MKO/DsiSMu8iAjpXxxQv7zIWP/Gn3vyTND0bGM2xHlYoLdmWCWYvx0XM7HKMJkOUFFABCnZFOBiBINCsxaDt2C8kyOnY6zYUHcV5Kxp21MhSSxRJlB44S+hePjkrWFiFs/uYPxzjaHnuxjRiVM4afQwv3JG3oekN608rwsJleYxRiZomzHHLwm40BbeObbpxg/OeBSa9g5RVYqqVPUg/OKKx2TXClyR+E8OdOIx+HxQHnOSbqGAWwFIcaSYImNECcRaWKxkSAGrBEmFkaRcNopR5wnu6nNOz+xk5dH8OzPR9h+iXYL/BTanbwweXLtyjf0SCwf+Q+nUfEikWAsZFZ56VlPb1/CTb91Eb3DfZ77zlmOH8vZHxl2TTGH0lKIxGJiRazFq+KbhxshqGuiKuimBWIEIyBCVQ9jsDMnTC+CUxgr9AVO5Z5jQ09+IObq+3axcP0ch56bcPJYQRquer/ADUoYFOQj/fAbfiaoz66/1Lph6W56+d9hPGKVlvH0jzseHeQcPJjxga9czPFH+jz/4DovvpBzkQq7E1gSoQ0kAQpGBUuIs6dhAWYMmDlseg1ig2jIFXJRhijrDk6MPCcF7BUxV96zwsW3z3O0pzz6RI98w9OaOIq+Q/sl9Aokd3cHLW/YAIDRv6w/nF2/9GFr9CExikpEgieyjl88U3J6R8TB97a459fmOHNozHPf7/LEY0PktZIVhGWjrMSWlkAMpAJWFQMVBAVAFWZPupNKuGdcwtlCWVPPWcDvirjojhb/9u5Fdt6YcnKgPP78kN5pRzTw6NCR9xz0SrTv8KP8w+PD/Yff9C9Espuyq9Is+W68EL8z7liSRUu6MI0dg50TOivCJZfE7N+VYLqe156a8Pw/DTj11Jizz+REzhPhSVDaCEnAjPslkFdQhsAY8AilMaxclbLrhowr72iz67oUXTIcey3n6NGS3llHOYRiQxl3HflGffWLbvnz8UjvGz+58dy2/EBi/OQ4JLpm+bbOF61G9ysO5y3qDZEXFMMrRcmpE0OWVyx7b4v5yMcWScolitOe9VcKXjmcMzrlGJwuWT9e0D3pGHVLAFoLEXMXWfbsjZlbjWjvMFx8Y8rSvoh4Oi6scmrN8YuTA84edeQDwfUh6nnKKdyGx1co8QP/Z+uP9L78lv1OcOcdc3uT1H4j7si/Sxci0o6QdcwUUiFpC2lbiTJozwsLS0Jn3rK8aEhiU59iFWI1iAcMKFCKpwC8KJMc1rolvb5no6uMNkomY4MbCZOhMu7DeMNPo1ZxshGufvlX+YTPnvrh4NW39FdiTYF/f/EH5+6Vwn1DSrvblII4g+QCY0HGIG1hMoZuX+kncDKGKFJsRAUjIGbmLtYBHoq8HvtccDnkEyhHASWTIUwGMO57Jn0l73nyrjuRD/nsKz8YPPAr/alsU/CByz/a+i8ykT9mbGFe8CNB24JvQRmQCXECNgYfgwniTSOemYdAHnyAg7KgEl8UkI+UfNzEgTIeBBOUPJgw8F996W9Gf7IdP5V9U9j/EVmZi5M/jjL5bDpnOmlbSFpCnDGFECUQxbUJkRUknnmaPvu/QBmguCnKvDYiiC9rA5r2971yrN8YFPlXj/2tngXYDgO2DdfcF/0Ha+UzSWY+FGfSidNggGAbA4xtYAA2a3svqGvav9TNLhiHDtBeMebh0rn/8bPvlt+ZrbeNBmw/bvyE3IKYO21k/42xXGOtXmojFsVIZAQIoIZ6UNWyLOiq44hz8rOydP+M+n889H/08beK44U/nHwba79gwAUDLhhwwYALBvxfQVK4Lfbwjt4AAAAASUVORK5CYII=" />，涉及到这个问题的可以参考这个<a href="https://github.com/firebase/firebase-tools/issues/155#issuecomment-600966322">Issue</a>(16年的Issue现在还是个谜...)。</p>
+<p>优点：生成速度快，整个流程很方便 </br>
+缺点：国内可能会卡在验证上 </br></p>
+</li>
+<li>
+<p><strong>Blogger | CSDN | 简书</strong>:</p>
+<blockquote>
+<p><em>Blogger is a blog-publishing service that allows multi-user blogs with time-stamped entries.   --Wikipedia</em></p>
+</blockquote>
+<p><a href="https://www.blogger.com/">Blogger</a>、<a href="https://www.csdn.net/">CSDN</a>和<a href="https://www.jianshu.com/">简书</a>如果不额外折腾什么样式之类的可以说都是懒人博客了，后两者不用多介绍了。Blogger在2013年被财大气粗的谷歌给买下来了，但是通过Ping <code>ghs.google.com</code>可以找到国内可访问IP从而配置成国内可访问的方式。CSDN页面比较乱，简书还好，而Blogger就非常清爽了。</p>
+<p>优点：折腾党可扩展性强，不折腾也勉强能用，直接网页就可以创作 </br>
+缺点：国内开发者贡献的模板少，已有组件少需要自己写一些功能 </br></p>
+</li>
+</ol>
+<p><a id="markdown-3-补充说明" name="3-补充说明"></a></p>
+<h3 id="3-%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E">3. 补充说明</h3>
+<ol>
+<li>
+<p>静态网站生成器：</p>
+<p><a href="https://www.netlify.com/">Netlify</a>给出了一份<a href="https://www.staticgen.com/">「Static Site Generators for JAMstack Sites」</a>的清单，可以根据需要和热门程度选择适合自己的静态网站生成器。</p>
+</li>
+<li>
+<p>静态网站托管平台：</p>
+<p>托管平台的话有很多了，国内比较热门的应该就是Github Pages了，目前加入了<a href="https://github.com/features/actions">Actions</a>从而拥有CI/CD的能力了，配合上<a href="https://coding.net/">Coding</a> CDN的话也算是功能完善了<img class="emoji" alt="snowman" src="data:image/png;base64,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" />。</p>
+<p>其他的托管平台我比较推荐的有：</p>
+<ul>
+<li><a href="https://zeit.co/">ZEIT</a></li>
+<li><a href="https://firebase.google.com/">Firebase</a></li>
+<li><a href="https://www.netlify.com/">Netlify</a></li>
+</ul>
+</li>
+<li>
+<p>搭建静态博客的教程：</p>
+<p>关于搭建静态博客，以上这些静态网站生成器的使用说明和相关教程有非常详细的中文博客叙述，这里就不再赘述了。</p>
+<p>一点建议就是尽量选择CI的方式和带有CMS的托管。</p>
+</li>
+</ol>
+<p><a id="markdown-三-为什么选择blogger" name="三-为什么选择blogger"></a></p>
+<h2 id="%E4%B8%89-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9blogger">三. 为什么选择Blogger</h2>
+<hr>
+<p><a id="markdown-1-blogger介绍" name="1-blogger介绍"></a></p>
+<h3 id="1-blogger%E4%BB%8B%E7%BB%8D">1. Blogger介绍</h3>
+<div align=center>
+	<img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/202003191.png" width="70%">
+</div>
+<p>根据<a href="https://zh.wikipedia.org/wiki/Blogger">维基百科Blogger</a>的介绍，Blogger.com是由Pyra Labs公司创立，是当前全球用户数量最多的个人网志服务提供商。Pyra Labs和Blogger.com均被Google公司收购，成为其旗下的一项服务内容。</p>
+<p>有以下特点：</p>
+<ul>
+<li>
+<p>Blogger提供免费主机Blogspot.com存放博客，用户不必写任何代码或者安装服务器软件或脚本，通过所见即所得界面轻松地创建、发布、维护和修改自己的网志。</p>
+</li>
+<li>
+<p>Blogger允许有经验的用户自行设计博客界面，其模板支持使用HTML和CSS进行编辑。</p>
+</li>
+</ul>
+<p>这非常方便两种人使用Blogger进行博客写作，一种像我一样不怎么会前端也不想折腾的懒人，和&quot;有经验的用户&quot;去自行设计博客界面，正如Blogger网站所介绍的&quot;<em>Publish your passions, you way.</em>&quot;。另外提供CMS相对于很多托管实在是方便太多了。</p>
+<p><a id="markdown-2-blogger国内使用问题" name="2-blogger国内使用问题"></a></p>
+<h3 id="2-blogger%E5%9B%BD%E5%86%85%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98">2. Blogger国内使用问题</h3>
+<p>由于某些原因，国内无法访问Blogger。但是谷歌拥有全球边缘网络，可以通过一些网络测试工具获取<code>ghs.google.com</code>的探测结果，选取合适的IP，将的CNAME解析更改为A解析。比如通过<a href="http://tool.chinaz.com/">站长工具</a>Ping <code>ghs.google.com</code>，可以获得一些可Ping通的国内固定IP，然后选取合适的IP进行测速发现访问可行。</p>
+<div align=center>
+	<img src="https://cdn.jsdelivr.net/gh/singularTnT/Image-Host@master/Blogger/assets/ghsping.png" width="100%">
+</div>
+<p>因此，设定好合适的A解析和另外一个CNAME解析后，国内即便没有梯子也可以快速的访问你的博客。</p>
+<p><a id="markdown-3-选blogger的想法" name="3-选blogger的想法"></a></p>
+<h3 id="3-%E9%80%89blogger%E7%9A%84%E6%83%B3%E6%B3%95">3. 选Blogger的想法</h3>
+<p>正如前面的叙述，折腾各种博客框架花了我很多的时间，因此我急切寻求一种非常简单的方式去记录一些内容，而且前端的东西乱糟糟的看的我头大<img class="emoji" alt="pig" src="data:image/png;base64,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" />。为此我还在V站发了一个求助帖：<a href="https://www.v2ex.com/t/653013#reply21">「V 站可以出一个付费的博客频道吗」</a>，但是V站的朋友很多都是技术向选择自建博客，同时得到版主的回应说在考虑建个博客频道但是存在一定顾虑。</p>
+<p>诚然很多的博客平台如微软MSN Spaces、网易博客等都相继关停，用博客的人也越来越少了，这本来就是时代的趋势，国内剩下的几个较大的博客平台也就只有<a href="https://www.csdn.net/">CSDN</a>、<a href="http://blog.sina.com.cn/">新浪博客</a>等，但是CSDN太偏向于技术，而新浪博客的页面实在是太乱了。</p>
+<p>通过翻了V站N个帖子分析了大家的需求和建议后，我最终选择了背靠谷歌的Blogger，作为我的自留地。</p>
+<p>以前网站的帖子就不迁移了，重新开始。</p>
+<p><a id="markdown-参考references" name="参考references"></a></p>
+<h2 id="%E5%8F%82%E8%80%83references">参考(References)</h2>
+<hr>
+<ul>
+<li>
+<p><a href="https://www.seoimo.com/wordpress-vps/">WordPress建站: 便宜VPS+LAMP搭建+博客一键安装教程</a> </br></p>
+</li>
+<li>
+<p><a href="https://github.com/HarleyWang93/blog/issues/1">Hexo + GitHub (Coding) Pages 搭建博客</a> </br></p>
+</li>
+<li>
+<p><a href="https://adevjoe.com/post/hosting-with-hugo-firebase/">Hugo + Firebase + Gitlab 自动化部署你的网站</a> </br></p>
+</li>
+<li>
+<p><a href="https://blog.iljw.me/2019/10/why-do-i-use-blogger-to-build-blog.html">为什么我使用 Blogger 搭建自己的博客</a> </br></p>
+</li>
+</ul>
+
+</body>
+</html>
