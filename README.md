@@ -16,3 +16,8 @@ Project面向Blogger创作，通过Github仓库储存和管理文件，包括：
 * 域名：通过[腾讯云](https://cloud.tencent.com/)注册，同时通过腾讯云后台进行解析，解析Blogger的IP通过Ping工具寻找"ghs.google.com"的国内可用IP进行A解析，另外一个直接用CNAME即可，后续考虑更换[Cloudflare](https://www.cloudflare.com/)
 * HTTPS：Blogger后台已经原生支持HTTPS，直接打开即可
 
+各类工具：
+
+VSCode
+* Markdown All in One: 预览Markdown和生成TOC
+* Markdown PDF: 转换.md为html
